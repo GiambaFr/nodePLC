@@ -1,0 +1,25 @@
+main.o: main.cpp threadPool.h BS_thread_pool_light.hpp config.h commons.h \
+ myMQTT.h digital_input.h bt.h withConfig.h withMqtt.h withSingleThread.h \
+ withState.h digital_output.h temp_sensors.h light.h dmx.h
+commons.o: commons.cpp commons.h
+config.o: config.cpp commons.h config.h
+bt.o: bt.cpp threadPool.h BS_thread_pool_light.hpp bt.h commons.h
+digital_input.o: digital_input.cpp commons.h digital_input.h bt.h \
+ withConfig.h config.h withMqtt.h myMQTT.h withSingleThread.h withState.h
+digital_output.o: digital_output.cpp commons.h digital_output.h \
+ withSingleThread.h withConfig.h config.h withMqtt.h myMQTT.h withState.h
+dmx.o: dmx.cpp dmx.h
+light.o: light.cpp commons.h light.h dmx.h withSingleThread.h \
+ withConfig.h config.h withMqtt.h myMQTT.h threadPool.h \
+ BS_thread_pool_light.hpp
+myMQTT.o: myMQTT.cpp threadPool.h BS_thread_pool_light.hpp config.h \
+ commons.h myMQTT.h
+temp_sensors.o: temp_sensors.cpp temp_sensors.h withSingleThread.h \
+ withConfig.h config.h commons.h withMqtt.h myMQTT.h threadPool.h \
+ BS_thread_pool_light.hpp
+withConfig.o: withConfig.cpp withConfig.h config.h commons.h withMqtt.h \
+ myMQTT.h
+withState.o: withState.cpp commons.h withState.h threadPool.h \
+ BS_thread_pool_light.hpp
+withSingleThread.o: withSingleThread.cpp withSingleThread.h
+withMqtt.o: withMqtt.cpp myMQTT.h config.h commons.h withMqtt.h

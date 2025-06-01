@@ -1,0 +1,617 @@
+{
+    "Digital_Inputs": {
+        "Inputs": [
+            {
+                "button": {
+                    "DC_GAP": 200,
+                    "HOLD_TIME": 1500,
+                    "buttonDispatch_TOPIC": "HousePLC/Buttons/BT_WC",
+                    "isButton": true
+                },
+                "buttonDispatch_TOPIC": "HousePLC/Buttons/BT_WC",
+                "comment": "Bp WC",
+                "dispatch_TOPIC": "HousePLC/Digital_Inputs/DI1",
+                "get_TOPIC": "HousePLC/Digital_Inputs/DI1/GET",
+                "isButton": true,
+                "name": "DI1",
+                "pin": 4,
+                "set_TOPIC": "HousePLC/Digital_Inputs/DI1/SET"
+            },
+            {
+                "button": {
+                    "DC_GAP": 200,
+                    "HOLD_TIME": 3000,
+                    "buttonDispatch_TOPIC": "HousePLC/Buttons/BT_PALIER",
+                    "isButton": true
+                },
+                "buttonDispatch_TOPIC": "HousePLC/Buttons/BT_PALIER",
+                "comment": "Bp Palier",
+                "dispatch_TOPIC": "HousePLC/Digital_Inputs/DI2",
+                "get_TOPIC": "HousePLC/Digital_Inputs/DI2/GET",
+                "isButton": true,
+                "name": "DI2",
+                "pin": 17,
+                "set_TOPIC": "HousePLC/Digital_Inputs/DI2/SET"
+            },
+            {
+                "button": {
+                    "DC_GAP": 200,
+                    "HOLD_TIME": 1500,
+                    "buttonDispatch_TOPIC": "HousePLC/Buttons/BT_SDB",
+                    "isButton": true
+                },
+                "buttonDispatch_TOPIC": "HousePLC/Buttons/BT_SDB",
+                "comment": "Bp Sdb",
+                "dispatch_TOPIC": "HousePLC/Digital_Inputs/DI3",
+                "get_TOPIC": "HousePLC/Digital_Inputs/DI3/GET",
+                "isButton": true,
+                "name": "DI3",
+                "pin": 27,
+                "set_TOPIC": "HousePLC/Digital_Inputs/DI3/SET"
+            },
+            {
+                "button": {
+                    "DC_GAP": 200,
+                    "HOLD_TIME": 1500,
+                    "buttonDispatch_TOPIC": "HousePLC/Buttons/BT_SALON",
+                    "isButton": true
+                },
+                "buttonDispatch_TOPIC": "HousePLC/Buttons/BT_SALON",
+                "comment": "Bp Salon",
+                "dispatch_TOPIC": "HousePLC/Digital_Inputs/DI4",
+                "get_TOPIC": "HousePLC/Digital_Inputs/DI4/GET",
+                "isButton": true,
+                "name": "DI4",
+                "pin": 23,
+                "set_TOPIC": "HousePLC/Digital_Inputs/DI4/SET"
+            },
+            {
+                "button": {
+                    "DC_GAP": 200,
+                    "HOLD_TIME": 1500,
+                    "buttonDispatch_TOPIC": "HousePLC/Buttons/BT_CHAMBRE",
+                    "isButton": true
+                },
+                "buttonDispatch_TOPIC": "HousePLC/Buttons/BT_CHAMBRE",
+                "comment": "Bp Chambre",
+                "dispatch_TOPIC": "HousePLC/Digital_Inputs/DI5",
+                "get_TOPIC": "HousePLC/Digital_Inputs/DI5/GET",
+                "isButton": true,
+                "name": "DI5",
+                "pin": 22,
+                "set_TOPIC": "HousePLC/Digital_Inputs/DI5/SET"
+            },
+            {
+                "button": {
+                    "DC_GAP": 200,
+                    "HOLD_TIME": 1500,
+                    "buttonDispatch_TOPIC": "HousePLC/Buttons/BT_DOUCHE",
+                    "isButton": true
+                },
+                "buttonDispatch_TOPIC": "HousePLC/Buttons/BT_DOUCHE",
+                "comment": "Bp Douche",
+                "dispatch_TOPIC": "HousePLC/Digital_Inputs/DI6",
+                "get_TOPIC": "HousePLC/Digital_Inputs/DI6/GET",
+                "isButton": true,
+                "name": "DI6",
+                "pin": 24,
+                "set_TOPIC": "HousePLC/Digital_Inputs/DI6/SET"
+            },
+            {
+                "button": {
+                    "DC_GAP": 200,
+                    "HOLD_TIME": 3000,
+                    "buttonDispatch_TOPIC": "HousePLC/Buttons/BT_EXTERIEUR",
+                    "isButton": true
+                },
+                "buttonDispatch_TOPIC": "HousePLC/Buttons/BT_EXTERIEUR",
+                "comment": "Bp Exterieur",
+                "dispatch_TOPIC": "HousePLC/Digital_Inputs/DI7",
+                "get_TOPIC": "HousePLC/Digital_Inputs/DI7/GET",
+                "isButton": true,
+                "name": "DI7",
+                "pin": 11,
+                "set_TOPIC": "HousePLC/Digital_Inputs/DI7/SET"
+            },
+            {
+                "button": {
+                    "DC_GAP": 200,
+                    "HOLD_TIME": 1500,
+                    "buttonDispatch_TOPIC": "HousePLC/Buttons/BT_VERRIERE_UP",
+                    "isButton": true
+                },
+                "buttonDispatch_TOPIC": "HousePLC/Buttons/BT_VERRIERE_UP",
+                "comment": "Bp Verriere UP",
+                "dispatch_TOPIC": "HousePLC/Digital_Inputs/DI8",
+                "get_TOPIC": "HousePLC/Digital_Inputs/DI8/GET",
+                "isButton": true,
+                "name": "DI8",
+                "pin": 7,
+                "set_TOPIC": "HousePLC/Digital_Inputs/DI8/SET"
+            },
+            {
+                "button": {
+                    "DC_GAP": 200,
+                    "HOLD_TIME": 1500,
+                    "buttonDispatch_TOPIC": "HousePLC/Buttons/BT_VERRIERE_DOWN",
+                    "isButton": true
+                },
+                "buttonDispatch_TOPIC": "HousePLC/Buttons/BT_VERRIERE_DOWN",
+                "comment": "Bp Verriere DOWN",
+                "dispatch_TOPIC": "HousePLC/Digital_Inputs/DI9",
+                "get_TOPIC": "HousePLC/Digital_Inputs/DI9/GET",
+                "isButton": true,
+                "name": "DI9",
+                "pin": 8,
+                "set_TOPIC": "HousePLC/Digital_Inputs/DI9/SET"
+            },
+            {
+                "button": {
+                    "isButton": false
+                },
+                "buttonDispatch_TOPIC": "none",
+                "comment": "Chaudiere Electrovanne fioul",
+                "dispatch_TOPIC": "HousePLC/Digital_Inputs/DI10",
+                "get_TOPIC": "HousePLC/Digital_Inputs/DI10/GET",
+                "isButton": false,
+                "name": "DI10",
+                "pin": 9,
+                "set_TOPIC": "HousePLC/Digital_Inputs/DI10/SET"
+            },
+            {
+                "button": {
+                    "isButton": false
+                },
+                "buttonDispatch_TOPIC": "none",
+                "comment": "Chaudiere Defaut bruleur",
+                "dispatch_TOPIC": "HousePLC/Digital_Inputs/DI11",
+                "get_TOPIC": "HousePLC/Digital_Inputs/DI11/GET",
+                "isButton": false,
+                "name": "DI11",
+                "pin": 25,
+                "set_TOPIC": "HousePLC/Digital_Inputs/DI11/SET"
+            },
+            {
+                "button": {
+                    "DC_GAP": 200,
+                    "HOLD_TIME": 2000,
+                    "buttonDispatch_TOPIC": "HousePLC/Buttons/BT_SONNETTE",
+                    "isButton": true
+                },
+                "buttonDispatch_TOPIC": "HousePLC/Buttons/BT_SONNETTE",
+                "comment": "Bp Sonette",
+                "dispatch_TOPIC": "HousePLC/Digital_Inputs/DI12",
+                "get_TOPIC": "HousePLC/Digital_Inputs/DI12/GET",
+                "isButton": true,
+                "name": "DI12",
+                "pin": 10,
+                "set_TOPIC": "HousePLC/Digital_Inputs/DI12/SET"
+            }
+        ]
+    },
+    "Digital_Outputs": {
+        "Outputs": [
+            {
+                "comment": "Eclairage douche",
+                "dimmable": false,
+                "dispatch_TOPIC": "HousePLC/Digital_Outputs/DO1",
+                "forced": false,
+                "forcedValue": "OFF",
+                "get_TOPIC": "HousePLC/Digital_Outputs/DO1/GET",
+                "locks": [],
+                "name": "DO1",
+                "pin": 7,
+                "retain": false,
+                "retainValue": "OFF",
+                "set_TOPIC": "HousePLC/Digital_Outputs/DO1/SET"
+            },
+            {
+                "comment": "NC",
+                "dimmable": false,
+                "dispatch_TOPIC": "HousePLC/Digital_Outputs/DO2",
+                "forced": false,
+                "forcedValue": "OFF",
+                "get_TOPIC": "HousePLC/Digital_Outputs/DO2/GET",
+                "locks": [],
+                "name": "DO2",
+                "pin": 6,
+                "retain": false,
+                "retainValue": "OFF",
+                "set_TOPIC": "HousePLC/Digital_Outputs/DO2/SET"
+            },
+            {
+                "comment": "Eclairage palier",
+                "dimmable": false,
+                "dispatch_TOPIC": "HousePLC/Digital_Outputs/DO3",
+                "forced": false,
+                "forcedValue": "OFF",
+                "get_TOPIC": "HousePLC/Digital_Outputs/DO3/GET",
+                "locks": [],
+                "name": "DO3",
+                "pin": 5,
+                "retain": false,
+                "retainValue": "OFF",
+                "set_TOPIC": "HousePLC/Digital_Outputs/DO3/SET"
+            },
+            {
+                "comment": "NC",
+                "dimmable": false,
+                "dispatch_TOPIC": "HousePLC/Digital_Outputs/DO4",
+                "forced": false,
+                "forcedValue": "OFF",
+                "get_TOPIC": "HousePLC/Digital_Outputs/DO4/GET",
+                "locks": [],
+                "name": "DO4",
+                "pin": 4,
+                "retain": false,
+                "retainValue": "OFF",
+                "set_TOPIC": "HousePLC/Digital_Outputs/DO4/SET"
+            },
+            {
+                "comment": "NC",
+                "dimmable": false,
+                "dispatch_TOPIC": "HousePLC/Digital_Outputs/DO5",
+                "forced": false,
+                "forcedValue": "OFF",
+                "get_TOPIC": "HousePLC/Digital_Outputs/DO5/GET",
+                "locks": [],
+                "name": "DO5",
+                "pin": 3,
+                "retain": false,
+                "retainValue": "OFF",
+                "set_TOPIC": "HousePLC/Digital_Outputs/DO5/SET"
+            },
+            {
+                "comment": "NC",
+                "dimmable": false,
+                "dispatch_TOPIC": "HousePLC/Digital_Outputs/DO6",
+                "forced": false,
+                "forcedValue": "OFF",
+                "get_TOPIC": "HousePLC/Digital_Outputs/DO6/GET",
+                "locks": [],
+                "name": "DO6",
+                "pin": 2,
+                "retain": false,
+                "retainValue": "OFF",
+                "set_TOPIC": "HousePLC/Digital_Outputs/DO6/SET"
+            },
+            {
+                "comment": "Eclairage exterieur",
+                "dimmable": false,
+                "dispatch_TOPIC": "HousePLC/Digital_Outputs/DO7",
+                "forced": false,
+                "forcedValue": "OFF",
+                "get_TOPIC": "HousePLC/Digital_Outputs/DO7/GET",
+                "locks": [],
+                "name": "DO7",
+                "pin": 1,
+                "retain": false,
+                "retainValue": "OFF",
+                "set_TOPIC": "HousePLC/Digital_Outputs/DO7/SET"
+            },
+            {
+                "comment": "GV VMC",
+                "dimmable": false,
+                "dispatch_TOPIC": "HousePLC/Digital_Outputs/DO8",
+                "forced": false,
+                "forcedValue": "OFF",
+                "get_TOPIC": "HousePLC/Digital_Outputs/DO8/GET",
+                "locks": [],
+                "name": "DO8",
+                "pin": 0,
+                "retain": false,
+                "retainValue": "OFF",
+                "set_TOPIC": "HousePLC/Digital_Outputs/DO8/SET"
+            },
+            {
+                "comment": "Chaudiere pompe",
+                "dimmable": false,
+                "dispatch_TOPIC": "HousePLC/Digital_Outputs/DO9",
+                "forced": false,
+                "forcedValue": "OFF",
+                "get_TOPIC": "HousePLC/Digital_Outputs/DO9/GET",
+                "locks": [],
+                "name": "DO9",
+                "pin": 15,
+                "retain": false,
+                "retainValue": "OFF",
+                "set_TOPIC": "HousePLC/Digital_Outputs/DO9/SET"
+            },
+            {
+                "comment": "Vanne 3 voies PLUS",
+                "dimmable": true,
+                "dispatch_TOPIC": "HousePLC/Digital_Outputs/DO10",
+                "forced": false,
+                "forcedValue": "OFF",
+                "get_TOPIC": "HousePLC/Digital_Outputs/DO10/GET",
+                "locks": [
+                    "DO11"
+                ],
+                "name": "DO10",
+                "pin": 14,
+                "retain": false,
+                "retainValue": "OFF",
+                "set_TOPIC": "HousePLC/Digital_Outputs/DO10/SET"
+            },
+            {
+                "comment": "Vanne 3 voies MOINS",
+                "dimmable": true,
+                "dispatch_TOPIC": "HousePLC/Digital_Outputs/DO11",
+                "forced": false,
+                "forcedValue": "OFF",
+                "get_TOPIC": "HousePLC/Digital_Outputs/DO11/GET",
+                "locks": [
+                    "DO10"
+                ],
+                "name": "DO11",
+                "pin": 13,
+                "retain": false,
+                "retainValue": "OFF",
+                "set_TOPIC": "HousePLC/Digital_Outputs/DO11/SET"
+            },
+            {
+                "comment": "Chauffe_eau pompe",
+                "dimmable": false,
+                "dispatch_TOPIC": "HousePLC/Digital_Outputs/DO12",
+                "forced": false,
+                "forcedValue": "OFF",
+                "get_TOPIC": "HousePLC/Digital_Outputs/DO12/GET",
+                "locks": [],
+                "name": "DO12",
+                "pin": 12,
+                "retain": false,
+                "retainValue": "OFF",
+                "set_TOPIC": "HousePLC/Digital_Outputs/DO12/SET"
+            },
+            {
+                "comment": "Chaudiere bruleur",
+                "dimmable": false,
+                "dispatch_TOPIC": "HousePLC/Digital_Outputs/DO13",
+                "forced": false,
+                "forcedValue": "OFF",
+                "get_TOPIC": "HousePLC/Digital_Outputs/DO13/GET",
+                "locks": [],
+                "name": "DO13",
+                "pin": 11,
+                "retain": false,
+                "retainValue": "OFF",
+                "set_TOPIC": "HousePLC/Digital_Outputs/DO13/SET"
+            },
+            {
+                "comment": "Chauffe_eau resistance",
+                "dimmable": false,
+                "dispatch_TOPIC": "HousePLC/Digital_Outputs/DO14",
+                "forced": false,
+                "forcedValue": "OFF",
+                "get_TOPIC": "HousePLC/Digital_Outputs/DO14/GET",
+                "locks": [],
+                "name": "DO14",
+                "pin": 10,
+                "retain": false,
+                "retainValue": "OFF",
+                "set_TOPIC": "HousePLC/Digital_Outputs/DO14/SET"
+            },
+            {
+                "comment": "Ouvrir verriere",
+                "dimmable": false,
+                "dispatch_TOPIC": "HousePLC/Digital_Outputs/DO15",
+                "forced": false,
+                "forcedValue": "OFF",
+                "get_TOPIC": "HousePLC/Digital_Outputs/DO15/GET",
+                "locks": [
+                    "DO16"
+                ],
+                "name": "DO15",
+                "pin": 9,
+                "retain": false,
+                "retainValue": "OFF",
+                "set_TOPIC": "HousePLC/Digital_Outputs/DO15/SET"
+            },
+            {
+                "comment": "Fermer verriere",
+                "dimmable": false,
+                "dispatch_TOPIC": "HousePLC/Digital_Outputs/DO16",
+                "forced": false,
+                "forcedValue": "OFF",
+                "get_TOPIC": "HousePLC/Digital_Outputs/DO16/GET",
+                "locks": [
+                    "DO15"
+                ],
+                "name": "DO16",
+                "pin": 8,
+                "retain": false,
+                "retainValue": "OFF",
+                "set_TOPIC": "HousePLC/Digital_Outputs/DO16/SET"
+            }
+        ]
+    },
+    "Lights": {
+        "Lights": [
+            {
+                "comment": "Bp Palier",
+                "current_value": 0,
+                "dispatch_TOPIC": "HousePLC/Lights/LIGHT_PALIER",
+                "get_TOPIC": "HousePLC/Lights/LIGHT_PALIER/GET",
+                "name": "DI2",
+                "output_TOPIC": "HousePLC/Digital_Outputs/DO3/SET",
+                "set_TOPIC": "HousePLC/Lights/LIGHT_PALIER/SET",
+                "type": "ONOFF"
+            },
+            {
+                "channel": 2,
+                "comment": "Bp Salon",
+                "current_value": 0,
+                "dispatch_TOPIC": "HousePLC/Lights/LIGHT_SALON",
+                "get_TOPIC": "HousePLC/Lights/LIGHT_SALON/GET",
+                "increment": 10,
+                "memo_value": 110,
+                "name": "DI4",
+                "set_TOPIC": "HousePLC/Lights/LIGHT_SALON/SET",
+                "type": "DIMMABLE"
+            },
+            {
+                "comment": "Bp Douche",
+                "current_value": 0,
+                "dispatch_TOPIC": "HousePLC/Lights/LIGHT_DOUCHE",
+                "get_TOPIC": "HousePLC/Lights/LIGHT_DOUCHE/GET",
+                "name": "DI6",
+                "output_TOPIC": "HousePLC/Digital_Outputs/DO1/SET",
+                "set_TOPIC": "HousePLC/Lights/LIGHT_DOUCHE/SET",
+                "type": "ONOFF"
+            },
+            {
+                "comment": "Bp Exterieur",
+                "current_value": 0,
+                "dispatch_TOPIC": "HousePLC/Lights/LIGHT_EXTERIEUR",
+                "get_TOPIC": "HousePLC/Lights/LIGHT_EXTERIEUR/GET",
+                "name": "DI7",
+                "output_TOPIC": "HousePLC/Digital_Outputs/DO7/SET",
+                "set_TOPIC": "HousePLC/Lights/LIGHT_EXTERIEUR/SET",
+                "type": "ONOFF"
+            },
+            {
+                "channel": 0,
+                "comment": "Bp WC",
+                "current_value": 0,
+                "dispatch_TOPIC": "HousePLC/Lights/LIGHT_WC",
+                "get_TOPIC": "HousePLC/Lights/LIGHT_WC/GET",
+                "increment": 10,
+                "memo_value": 85,
+                "name": "DI1",
+                "set_TOPIC": "HousePLC/Lights/LIGHT_WC/SET",
+                "type": "DIMMABLE"
+            },
+            {
+                "channel": 1,
+                "comment": "Bp Chambre",
+                "current_value": 0,
+                "dispatch_TOPIC": "HousePLC/Lights/LIGHT_CHAMBRE",
+                "get_TOPIC": "HousePLC/Lights/LIGHT_CHAMBRE/GET",
+                "increment": 10,
+                "memo_value": 100,
+                "name": "DI5",
+                "set_TOPIC": "HousePLC/Lights/LIGHT_CHAMBRE/SET",
+                "type": "DIMMABLE"
+            },
+            {
+                "channel": 3,
+                "comment": "Bp Sdb",
+                "current_value": 0,
+                "dispatch_TOPIC": "HousePLC/Lights/LIGHT_SDB",
+                "get_TOPIC": "HousePLC/Lights/LIGHT_SDB/GET",
+                "increment": 10,
+                "memo_value": 226,
+                "name": "DI3",
+                "set_TOPIC": "HousePLC/Lights/LIGHT_SDB/SET",
+                "type": "DIMMABLE"
+            },
+            {
+                "comment": "Bp Exterieur",
+                "current_value": 0,
+                "dispatch_TOPIC": "HousePLC/Lights/LIGHT_GARAGE_EXT",
+                "get_TOPIC": "HousePLC/Lights/LIGHT_GARAGE_EXT/GET",
+                "name": "DI7",
+                "output_TOPIC": "HousePLC/Digital_Outputs/DO4/SET",
+                "set_TOPIC": "HousePLC/Lights/LIGHT_GARAGE_EXT/SET",
+                "type": "ONOFF"
+            }
+        ]
+    },
+    "MQTT": {
+        "clientId": "HousePLC",
+        "host": "tcp://localhost:1883",
+        "onlineMessage": "{\"status\":\"online\"}",
+        "password": "null",
+        "suscribeTopics": [
+            "HousePLC/#",
+            "BME280/All",
+            "HousePLC/NodeRed/#"
+        ],
+        "user": "",
+        "willMessage": "{\"status\":\"offline\"}",
+        "willTopic": "HousePLC/status"
+    },
+    "OW": {
+        "1W_TEMP_SENSOR": [
+            {
+                "address": "5C821E0C0000",
+                "alarm": 80.0,
+                "comment": "Depart chauffage",
+                "dispatch_TOPIC": "HousePLC/TempSensors/TEMP_DEPART_CHAUFFAGE",
+                "get_TOPIC": "HousePLC/TempSensors/TEMP_DEPART_CHAUFFAGE/GET",
+                "max": 100.0,
+                "min": 0.0,
+                "name": "TEMP_DEPART_CHAUFFAGE",
+                "set_TOPIC": "HousePLC/TempSensors/TEMP_DEPART_CHAUFFAGE/SET"
+            },
+            {
+                "address": "F8451E0C0000",
+                "alarm": 85.0,
+                "comment": "Chaudiere",
+                "dispatch_TOPIC": "HousePLC/TempSensors/TEMP_CHAUDIERE",
+                "get_TOPIC": "HousePLC/TempSensors/TEMP_CHAUDIERE/GET",
+                "max": 100.0,
+                "min": 0.0,
+                "name": "TEMP_CHAUDIERE",
+                "set_TOPIC": "HousePLC/TempSensors/TEMP_CHAUDIERE/SET"
+            },
+            {
+                "address": "65AE1E0C0000",
+                "alarm": 80.0,
+                "comment": "Ballon bas",
+                "dispatch_TOPIC": "HousePLC/TempSensors/TEMP_CE_BOTTOM",
+                "get_TOPIC": "HousePLC/TempSensors/TEMP_CE_BOTTOM/GET",
+                "max": 100.0,
+                "min": 0.0,
+                "name": "TEMP_CE_BOTTOM",
+                "set_TOPIC": "HousePLC/TempSensors/TEMP_CE_BOTTOM/SET"
+            },
+            {
+                "address": "1FE81E0C0000",
+                "alarm": 80.0,
+                "comment": "Ballon milieu",
+                "dispatch_TOPIC": "HousePLC/TempSensors/TEMP_CE_MIDDLE",
+                "get_TOPIC": "HousePLC/TempSensors/TEMP_CE_MIDDLE/GET",
+                "max": 100.0,
+                "min": 0.0,
+                "name": "TEMP_CE_MIDDLE",
+                "set_TOPIC": "HousePLC/TempSensors/TEMP_CE_MIDDLE/SET"
+            },
+            {
+                "address": "82BB1E0C0000",
+                "alarm": 80.0,
+                "comment": "Ballon haut",
+                "dispatch_TOPIC": "HousePLC/TempSensors/TEMP_CE_TOP",
+                "get_TOPIC": "HousePLC/TempSensors/TEMP_CE_TOP/GET",
+                "max": 100.0,
+                "min": 0.0,
+                "name": "TEMP_CE_TOP",
+                "set_TOPIC": "HousePLC/TempSensors/TEMP_CE_TOP/SET"
+            },
+            {
+                "address": "44E01D0C0000",
+                "alarm": 80.0,
+                "comment": "cave",
+                "dispatch_TOPIC": "HousePLC/TempSensors/TEMP_CAVE",
+                "get_TOPIC": "HousePLC/TempSensors/TEMP_CAVE/GET",
+                "max": 100.0,
+                "min": 0.0,
+                "name": "TEMP_CAVE",
+                "set_TOPIC": "HousePLC/TempSensors/TEMP_CAVE/SET"
+            },
+            {
+                "address": "90D5FB0C0000",
+                "alarm": 80.0,
+                "comment": "Exterieur",
+                "dispatch_TOPIC": "HousePLC/TempSensors/TEMP_EXTERIEUR",
+                "get_TOPIC": "HousePLC/TempSensors/TEMP_EXTERIEUR/GET",
+                "max": 100.0,
+                "min": 0.0,
+                "name": "TEMP_EXTERIEUR",
+                "set_TOPIC": "HousePLC/TempSensors/TEMP_EXTERIEUR/SET"
+            }
+        ],
+        "port": 4304,
+        "server": "localhost"
+    }
+}

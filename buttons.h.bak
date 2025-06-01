@@ -1,0 +1,80 @@
+#ifndef BUTTON_H
+#define BUTTON_H
+
+#include <string>
+#include <nlohmann/json.hpp>
+#include <chrono>
+#include <vector>
+#include <string>
+#include <algorithm>
+
+#include "commons.h"
+#include "withSingleThread.h"
+#include "withConfig.h"
+#include "withMqtt.h"
+
+using json = nlohmann::json;
+
+
+
+class Button: public withConfig<CONF::Button>, public withMqtt, public withSingleThread {
+    private:
+
+        STATE lastState;
+        STATE curState;
+
+        std::chrono::steady_clock::time_point pressedTime;
+        std::chrono::steady_clock::time_point releasedTime;
+        std::chrono::steady_clock::time_point t0;
+        std::chrono::steady_clock::time_point t1;
+
+        unsigned int clickCount;
+        CLICK_TYPE clickType;
+
+
+        using actionHandlersFunc = std::function<void(BUTTON_ACTION, unsigned int)>;
+        std::vector<actionHandlersFunc> actionHandlers;
+        void _onAction(BUTTON_ACTION btAction, unsigned int clickCount);
+
+    public:
+        Button(CONFIG*, CONF::Button* /*buttonConf*/, MyMqtt* /*myMqtt*/);
+        ~Button();
+
+        BUTTON_TYPE getType();
+        void setType(BUTTON_TYPE);
+        int getDcGap();
+        void setDcGap(int /*ms*/);
+        int getHoldTime();
+        void setHoldTime(int /*ms*/);
+
+        std::string getListenTOPIC();
+        void setListenTOPIC(std::string);
+
+        void setCurState(STATE /*curState*/);
+
+
+        void process();
+        void _onMainThreadStart();
+        void _onMainThreadStopping();
+        void _onMainThreadStop();
+        
+        void addActionHandler(actionHandlersFunc function);
+
+};
+
+
+class Buttons {
+    private:
+        std::vector<Button*> buttons;
+    public:
+        Buttons(CONFIG* /*config*/, MyMqtt*);
+        ~Buttons();
+        void addButton(Button*);
+        Button *findByName(std::string);
+        void dump();
+        void startChildrenThreads();
+        void stopChildrenThreads();
+        void joinChildrenThreads();
+};
+
+#endif
