@@ -1,7 +1,6 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#include <thread>
 
 #include "commons.h"
 
@@ -20,20 +19,27 @@ VMC_STATE vmcState_from_string(std::string s) {
     return VMC_STATE(std::distance(vmcStateStr.begin(), itr));
 }
 
-std::vector<std::string> verriereStateStr = {"NOT_SET", "VERRIERE_STOP", "VERRIERE_DOWN", "VERRIERE_UP"};
-std::string verriereState_to_string(VERRIERE_STATE state) {return verriereStateStr[int(state)];}
+std::vector<std::string> verriereStateStr = {"NOT_SET", "VERRIERE_STOP", "VERRIERE_MOVING_DOWN", "VERRIERE_MOVING_UP", "VERRIERE_OPEN", "VERRIERE_CLOSED"};
+std::string verriereState_to_string(VERRIERE_STATE state) { return verriereStateStr[static_cast<int>(state)]; }
 VERRIERE_STATE verriereState_from_string(std::string s) {
-    std::vector<std::string>::iterator itr = std::find(verriereStateStr.begin(), verriereStateStr.end(), s);
-    return VERRIERE_STATE(std::distance(verriereStateStr.begin(), itr));
+    auto itr = std::find(verriereStateStr.begin(), verriereStateStr.end(), s);
+    if (itr == verriereStateStr.end()) {
+        // Handle error, e.g., throw an exception or return a default
+        return VERRIERE_STATE::NOT_SET;
+    }
+    return static_cast<VERRIERE_STATE>(std::distance(verriereStateStr.begin(), itr));
 }
 
-
-std::vector<std::string> verriereActionStr = {"VERRIERE_STOP", "VERRIERE_DOWN", "VERRIERE_UP"};
-std::string verriereAction_to_string(VERRIERE_ACTION verriereAction) {return verriereActionStr[int(verriereAction)];};
+std::vector<std::string> verriereActionStr = {"VERRIERE_STOP", "VERRIERE_DOWN", "VERRIERE_UP", "SET_PERCENTAGE"};
+std::string verriereAction_to_string(VERRIERE_ACTION verriereAction) { return verriereActionStr[static_cast<int>(verriereAction)]; }
 VERRIERE_ACTION verriereAction_from_string(std::string s) {
-    std::vector<std::string>::iterator itr = std::find(verriereActionStr.begin(), verriereActionStr.end(), s);
-    return VERRIERE_ACTION(std::distance(verriereActionStr.begin(), itr));
-};
+    auto itr = std::find(verriereActionStr.begin(), verriereActionStr.end(), s);
+    if (itr == verriereActionStr.end()) {
+        // Handle error
+        return VERRIERE_ACTION::VERRIERE_STOP; // Or throw
+    }
+    return static_cast<VERRIERE_ACTION>(std::distance(verriereActionStr.begin(), itr));
+}
 
 
 std::vector<std::string> outputTypeStr = {"RELAY", "DIMMABLE", "TIMED", "VERRIERE"};

@@ -112,6 +112,22 @@ namespace CONF {
         json getJsonConfig(CONF::Lights*);
     } Lights;
 
+    typedef struct Verriere {
+        std::string name;
+        std::string comment;
+        int open_time_ms;
+        int close_time_ms;
+        int slowdown_time_ms;
+        std::string get_TOPIC;
+        std::string set_TOPIC;
+        std::string dispatch_TOPIC;
+        json getJsonConfig(CONF::Verriere*);
+    } Verriere;
+
+    typedef struct Verrieres {
+        std::vector<Verriere*> verrieres;
+        json getJsonConfig(CONF::Verrieres*);
+    } Verrieres;
  
     struct Config {
         Mqtt *mqtt;
@@ -119,6 +135,7 @@ namespace CONF {
         Digital_Outputs *outputs;
         OW *ow;
         Lights *lights;
+        Verrieres *verrieres;
     };
 
     void to_json(json& j, const Config& c);

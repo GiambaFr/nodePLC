@@ -3,6 +3,7 @@
 #include <iostream>
 #include <sstream>
 #include <vector>
+#include <string> // Ensure string is included
 
 
 using std::vector;
@@ -18,11 +19,12 @@ enum class VMC_STATE {NOT_SET, PV, GV};
 std::string vmcState_to_string(VMC_STATE state);
 VMC_STATE vmcState_from_string(std::string);
 
-enum class VERRIERE_STATE { NOT_SET, VERRIERE_STOP, VERRIERE_DOWN, VERRIERE_UP };
-std::string verriereState_to_string(VERRIERE_STATE state);
-VERRIERE_STATE verriereState_from_string(std::string);
 
-enum class VERRIERE_ACTION {VERRIERE_STOP, VERRIERE_DOWN, VERRIERE_UP};
+enum class VERRIERE_STATE { NOT_SET, VERRIERE_STOP, VERRIERE_MOVING_DOWN, VERRIERE_MOVING_UP, VERRIERE_OPEN, VERRIERE_CLOSED };
+std::string verriereState_to_string(VERRIERE_STATE state);
+VERRIERE_STATE verriereState_from_string(std::string s);
+
+enum class VERRIERE_ACTION { VERRIERE_STOP, VERRIERE_DOWN, VERRIERE_UP, SET_PERCENTAGE };
 std::string verriereAction_to_string(VERRIERE_ACTION verriereAction);
 VERRIERE_ACTION verriereAction_from_string(std::string s);
 

@@ -12,100 +12,12 @@ namespace CONF {
 
 
     void to_json(json& j, const Config& c) {
-
-        /*j["MQTT"] = json{{"host", c.mqtt->host}, {"clientId", c.mqtt->clientId}, {"willTopic", c.mqtt->willTopic}, {"willMessage",c.mqtt->willMessage}, {"onlineMessage", c.mqtt->onlineMessage}, {"user", c.mqtt->user}, {"password", c.mqtt->password}};
-        j["MQTT"]["suscribeTopics"] = json::array();
-        for (auto& st:c.mqtt->suscribeTopics) {
-            j["MQTT"]["suscribeTopics"].push_back(st);
-        }*/
         j["MQTT"] = c.mqtt->getJsonConfig(c.mqtt);
-
-        /*j["Digital_Inputs"]["Inputs"] = json::array();
-        for(auto& input: c.inputs->inputs) {
-            json i;
-            i["name"] = input->name;
-            i["comment"] = input->comment;
-            i["pin"] = input->pin;
-            i["set_TOPIC"] = input->set_TOPIC;
-            i["dispatch_TOPIC"] = input->dispatch_TOPIC;
-            j["Digital_Inputs"]["Inputs"].push_back(i);
-        }*/
         j["Digital_Inputs"] = c.inputs->getJsonConfig(c.inputs);
-
-        /*j["Digital_Outputs"]["Outputs"] = json::array();
-        for(auto& output: c.outputs->outputs) {
-            json o;
-            o["name"] = output->name;  
-            o["comment"] = output->comment;       
-            o["pin"] = output->pin;
-            o["forced"] = output->forced;
-            o["forcedValue"] = output->forcedValue;
-            o["retain"] = output->retain;
-            o["retainValue"] = output->retainValue;
-            o["set_TOPIC"] = output->set_TOPIC;
-            o["dispatch_TOPIC"] = output->dispatch_TOPIC;
-            o["locks"] = json::array();
-            for (auto& lock: output->locks) {
-                o["locks"].push_back(lock);
-            }
-            j["Digital_Outputs"]["Outputs"].push_back(o);
-        }*/
         j["Digital_Outputs"] = c.outputs->getJsonConfig(c.outputs);
-
-        /*j["OW"]["server"] = c.ow->server;
-        j["OW"]["port"] = c.ow->port;
-        j["OW"]["1W_TEMP_SENSOR"] = json::array();
-        for(auto& sensor: c.ow->sensors) {
-            json s;
-            s["name"] = sensor->name;
-            s["comment"] = sensor->comment;
-            s["address"] = sensor->address;
-            s["min"] = sensor->min;
-            s["max"] = sensor->max;
-            s["alarm"] = sensor->alarm;
-            s["set_TOPIC"] = sensor->set_TOPIC;
-            s["dispatch_TOPIC"] = sensor->dispatch_TOPIC;
-            j["OW"]["1W_TEMP_SENSOR"].push_back(s);
-        }*/
         j["OW"] = c.ow->getJsonConfig(c.ow);
-
-        /*j["Lights"]["Lights"] = json::array();
-        for(auto& light: c.lights->lights) {
-            json l;
-            l["name"] = light->name;
-            l["comment"] = light->comment;
-            l["current_value"] = light->current_value;
-            l["type"] = lightType_to_string(light->type);
-            l["set_TOPIC"] = light->set_TOPIC;
-            l["dispatch_TOPIC"] = light->dispatch_TOPIC;
-            if (light->type == LIGHT_TYPE::DIMMABLE) { //dimmableLights
-                l["channel"] = light->channel;
-                l["memo_value"] = light->memo_value;
-                l["increment"] = light->increment;
-            } else if (light->type == LIGHT_TYPE::ONOFF) { //for switchLights
-                l["output_TOPIC"] = light->output_TOPIC; 
-            }          
-
-            j["Lights"]["Lights"].push_back(l);
-        }*/
         j["Lights"] = c.lights->getJsonConfig(c.lights);
-
-        /*j["VMC"]["name"] = c.vmc->name;
-        j["VMC"]["comment"] = c.vmc->comment;
-        j["VMC"]["timeBeforeStart"] = c.vmc->timeBeforeStart;
-        j["VMC"]["timeAfterStop"] = c.vmc->timeAfterStop;       
-        j["VMC"]["output_TOPIC"] = c.vmc->output_TOPIC;   
-        j["VMC"]["set_TOPIC"] = c.vmc->set_TOPIC;
-        j["VMC"]["dispatch_TOPIC"] = c.vmc->dispatch_TOPIC;
-        j["VMC"]["listeners"] = json::array();
-        for(auto& listener: c.vmc->listeners) {
-            json l;
-            l["topic"] = listener->topic;
-            l["variable"] = listener->variable;
-            l["min"] = listener->min;
-            j["VMC"]["listeners"].push_back(l);
-        }*/
-        
+        j["Verrieres"] = c.verrieres->getJsonConfig(c.verrieres);
     }
 
     void from_json(const json& j, Config& c) {
@@ -201,9 +113,24 @@ namespace CONF {
             c.lights->lights.push_back(light);
         }
 
-        
+        c.verrieres = new CONF::Verrieres();
+        for(auto& vs: j["Verrieres"]["Verriere"]) {
+            Verriere *v = new CONF::Verriere();
+            v->name = vs["name"].get<std::string>();
+            v->comment = vs["comment"].get<std::string>();
+            v->open_time_ms = vs["open_time_ms"].get<int>();
+            v->close_time_ms = vs["close_time_ms"].get<int>();
+            v->slowdown_time_ms = vs["slowdown_time_ms"].get<int>();
+            v->get_TOPIC = vs["get_TOPIC"].get<std::string>();
+            v->set_TOPIC = vs["set_TOPIC"].get<std::string>();
+            v->dispatch_TOPIC = vs["dispatch_TOPIC"].get<std::string>();
+            c.verrieres->verrieres.push_back(v);
+        }
+
+
 
     }
+    
 }
 
 
@@ -329,9 +256,37 @@ json CONF::Lights::getJsonConfig(CONF::Lights *lights){
     return j;
 }
 
+json CONF::Verriere::getJsonConfig(CONF::Verriere* verriere){
+    json v;
+    v["name"] = verriere->name;
+    v["comment"] = verriere->comment;
+    v["open_time_ms"] = verriere->open_time_ms;
+    v["close_time_ms"] = verriere->close_time_ms;
+    v["slowdown_time_ms"] = verriere->slowdown_time_ms;
+    v["get_TOPIC"] = verriere->get_TOPIC;
+    v["set_TOPIC"] = verriere->set_TOPIC;
+    v["dispatch_TOPIC"] = verriere->dispatch_TOPIC;
+    return v;
+}
+
+json CONF::Verrieres::getJsonConfig(CONF::Verrieres *verrieres){
+    json j;
+    j["Verrieres"] = json::array();
+    for(auto& verriere: verrieres->verrieres) {
+        j["Verrieres"].push_back(verriere->getJsonConfig(verriere));
+    }
+    return j;
+}
 
 
-CONFIG::CONFIG() {}
+CONFIG::CONFIG() {
+    this->config.mqtt = nullptr;
+    this->config.inputs = nullptr;
+    this->config.outputs = nullptr;
+    this->config.ow = nullptr;
+    this->config.lights = nullptr;
+    this->config.verrieres = nullptr; // Initialize in constructor
+}
 
 CONF::Config *CONFIG::getConfig() {
     return &this->config;
@@ -340,7 +295,11 @@ CONF::Config *CONFIG::getConfig() {
 int CONFIG::load(std::string fileName) {
     this->fileName = fileName;
     std::ifstream configFile(this->fileName);
-
+    if (!configFile.is_open()) {
+        std::cerr << "Error opening config file: " << this->fileName << std::endl;
+        // Optionally, create a default config or throw an exception
+        return;
+    }
     json j;
     configFile >> j;
     this->config = j.get<CONF::Config>();  

@@ -1,6 +1,5 @@
 https://raw.githubusercontent.com/GiambaFr/nodePLC/refs/heads/main/BS_thread_pool.hpp
 https://raw.githubusercontent.com/GiambaFr/nodePLC/refs/heads/main/BS_thread_pool_light.hpp
-
 https://raw.githubusercontent.com/GiambaFr/nodePLC/refs/heads/main/bt.cpp
 https://raw.githubusercontent.com/GiambaFr/nodePLC/refs/heads/main/bt.h
 https://raw.githubusercontent.com/GiambaFr/nodePLC/refs/heads/main/commons.cpp
