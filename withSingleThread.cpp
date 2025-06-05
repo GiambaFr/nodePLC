@@ -33,11 +33,12 @@ std::thread withSingleThread::processThread() {
 }
 
 
-void withSingleThread::start() {
+void withSingleThread::start(const char *name) {
     if (!this->run) {
         this->_onMainThreadStart();
         this->run = true;
         this->main_thread = this->processThread();
+        pthread_setname_np(this->main_thread.native_handle(), name);
     }
 }
 

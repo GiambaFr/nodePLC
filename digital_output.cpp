@@ -320,7 +320,7 @@ void Digital_Outputs::startChildrenThreads() {
   std::cout << "Starting Digital_Outputs (DIMMABLE) children thread..." << std::endl;
   for(std::vector<Digital_Output*>::iterator it = std::begin(this->outputs); it != std::end(this->outputs); ++it) {
     if ( (*it)->isDimmable() )
-      (*it)->start();
+      (*it)->start((*it)->getName().c_str());
   } 
 }
 

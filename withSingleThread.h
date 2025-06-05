@@ -20,7 +20,7 @@ class withSingleThread {
         virtual ~withSingleThread();
         void setThreadSleepTimeMicro(int);
         void setThreadSleepTimeMillis(int);
-        void start();
+        void start(const char *name);
         void stop();
         std::thread *getProcessThread();
 };

@@ -325,7 +325,7 @@ void LIGHTS::dump() {
 void LIGHTS::startChildrenThreads() {
   std::cout << "Starting Lights children thread..." << std::endl;
   for(std::vector<LIGHT*>::iterator it = std::begin(this->lights); it != std::end(this->lights); ++it) {
-    (*it)->start();
+    (*it)->start((*it)->getName().c_str());
   } 
 }
 

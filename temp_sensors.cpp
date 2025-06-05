@@ -246,7 +246,7 @@ void Temp_Sensors::dump() {
 void Temp_Sensors::startChildrenThreads() {
   std::cout << "Starting Temp_Sensors children thread..." << std::endl;
   for(std::vector<Temp_Sensor*>::iterator it = std::begin(this->sensors); it != std::end(this->sensors); ++it) {
-    (*it)->start();
+    (*it)->start((*it)->getName().c_str());
   } 
 }
 

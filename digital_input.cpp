@@ -158,7 +158,7 @@ void Digital_Inputs::dump() {
 void Digital_Inputs::startChildrenThreads() {
   std::cout << "Starting Digital_Input children thread..." << std::endl;
   for(std::vector<Digital_Input*>::iterator it = std::begin(this->inputs); it != std::end(this->inputs); ++it) {
-    (*it)->start();
+    (*it)->start((*it)->getName().c_str());
   } 
 }
 
