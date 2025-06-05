@@ -113,7 +113,7 @@ namespace CONF {
         }
 
         c.verrieres = new CONF::Verrieres();
-        for(auto& v: j['Verrires']['Verrieres']) {
+        for(auto& v: j["Verrieres"]["Verrieres"]) {
             Verriere *verriere = new CONF::Verriere();
             verriere->name = v["name"].get<std::string>();
             verriere->comment = v["comment"].get<std::string>();
