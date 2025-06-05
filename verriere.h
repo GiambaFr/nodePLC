@@ -26,7 +26,7 @@ class VERRIERE: public withConfig<CONF::Verriere>, public withSingleThread, publ
         std::atomic<bool> init;
         std::atomic<bool> stop_motion_thread; // Flag pour arrêter le thread de mouvement
         std::thread motion_thread; // Thread pour le calcul de la position
-        
+
         //todo Analog_Input;
 
         /* --- FROM CONFIG --- */
@@ -70,14 +70,14 @@ class VERRIERE: public withConfig<CONF::Verriere>, public withSingleThread, publ
         VERRIERE(CONFIG* /*config*/, CONF::Verriere* /*lightConf*/, MyMqtt* /*myMqtt*/, Digital_Output*, Digital_Output* /*, TODO:: Analog_Input*/);
         ~VERRIERE();
 
-        long getOpenDurationMs();
-        void setOpenDurationMs(long duration);
-        long getCloseDurationMs();
-        void setCloseDurationMs(long duration);
-        long getOpenSlowdownDurationMs();
-        void setOpenSlowdownDurationMs(long duration);
-        long getCloseSlowdownDurationMs();
-        void setCloseSlowdownDurationMs(long duration);
+        int getOpenDurationMs();
+        void setOpenDurationMs(int duration);
+        int getCloseDurationMs();
+        void setCloseDurationMs(int duration);
+        int getOpenSlowdownDurationMs();
+        void setOpenSlowdownDurationMs(int duration);
+        int getCloseSlowdownDurationMs();
+        void setCloseSlowdownDurationMs(int duration);
         int getCurrentPosition();
         void setCurrentPosition(int position);
         int getTargetPosition();
@@ -102,7 +102,7 @@ class VERRIERES {
 
 
     public:
-        VERRIERES(CONFIG* /*config*/, MyMqtt*);
+        VERRIERES(CONFIG* /*config*/, MyMqtt*, Digital_Outputs*);
         ~VERRIERES();
 
         void addVerriere(VERRIERE*);

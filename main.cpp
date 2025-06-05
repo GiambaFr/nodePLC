@@ -26,7 +26,7 @@
 #include "digital_output.h"
 #include "temp_sensors.h"
 #include "light.h"
-
+#include "verriere.h"
 // for convenience
 using json = nlohmann::json;
 
@@ -42,6 +42,7 @@ Temp_Sensors * TempSensors;
 MyMqtt *myMqtt;
 //Buttons *buttons;
 LIGHTS *lights;
+VERIERRES *Verrieres;
 
 
 void signalHandler( int signum ) {
@@ -53,6 +54,12 @@ void signalHandler( int signum ) {
 void atexit_handler() 
 {
     std::cout << "Exiting application. Cleaning up resources..." << std::endl;
+
+    if (Verrieres) {
+        Verrieres->stopChildrenThreads(); // Assurez-vous que cette méthode existe
+        delete Verrieres;
+        Verrieres = nullptr;        
+    }
 
     // cleanup and close up stuff here
     if (lights) {
@@ -112,12 +119,14 @@ int main(int argc, char** argv) {
     Outputs = new Digital_Outputs(config, myMqtt);
     TempSensors = new Temp_Sensors(config, myMqtt);
     lights = new LIGHTS(config, myMqtt);
+    Verrieres = new VERRIERES(config, myMqtt, Outputs);
 
 
     Inputs->startChildrenThreads();
     Outputs->startChildrenThreads(); // for dimmable output, need of thread for pwm
     TempSensors->startChildrenThreads();
     lights->startChildrenThreads();
+    Verriere->startChildrenThreads();
 
     myMqtt->connect();
 

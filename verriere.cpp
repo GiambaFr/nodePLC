@@ -6,6 +6,7 @@
 #include "commons.h"
 #include "digital_output.h"
 #include "verriere.h"
+#include "config.h"
 
 #include "threadPool.h"
 
@@ -209,38 +210,38 @@ void VERRIERE::addTargetChangeHandler(targetChangeHandlersFunc function) {
   this->targetChangeHandlers.push_back(function);
 }
 
-long VERRIERE::getOpenDurationMs() {
+int VERRIERE::getOpenDurationMs() {
     return this->getConfigT()->open_duration_ms;
 }
 
-void VERRIERE::setOpenDurationMs(long duration) {
+void VERRIERE::setOpenDurationMs(int duration) {
     this->getConfigT()->open_duration_ms = duration;
     this->saveConfig();
 }
 
-long VERRIERE::getCloseDurationMs() {
+int VERRIERE::getCloseDurationMs() {
     return this->getConfigT()->close_duration_ms;
 }
 
-void VERRIERE::setCloseDurationMs(long duration) {
+void VERRIERE::setCloseDurationMs(int duration) {
     this->getConfigT()->close_duration_ms = duration;
     this->saveConfig();
 }
 
-long VERRIERE::getOpenSlowdownDurationMs() {
+int VERRIERE::getOpenSlowdownDurationMs() {
     return this->getConfigT()->open_slowdown_duration_ms;
 }
 
-void VERRIERE::setOpenSlowdownDurationMs(long duration) {
+void VERRIERE::setOpenSlowdownDurationMs(int duration) {
     this->getConfigT()->open_slowdown_duration_ms = duration;
     this->saveConfig();
 }
 
-long VERRIERE::getCloseSlowdownDurationMs() {
+int VERRIERE::getCloseSlowdownDurationMs() {
     return this->getConfigT()->close_slowdown_duration_ms;
 }
 
-void VERRIERE::setCloseSlowdownDurationMs(long duration) {
+void VERRIERE::setCloseSlowdownDurationMs(int duration) {
     this->getConfigT()->close_slowdown_duration_ms = duration;
     this->saveConfig();
 }
@@ -465,3 +466,35 @@ VERRIERE::~VERRIERE() {
 }
 
 
+
+VERRIERES::VERRIERES(CONFIG* config, MyMqtt* myMqtt, Digital_Outputs *DOs) {
+    for (auto verriereConf: config->getConfig()->verrieres->verrieres) {
+      VERRIERE *V = new VERRIERE(config, verriereConf, myMqtt, DOs->findByName(verriereConf->up_DoName), DOs->findByName("verriereConf->down_DoName"));
+      this->addVerriere(V);
+      std::cout << "Added Verriere name: " << V->getName() << " comment: " << V->getComment() << std::endl;
+    }
+}
+
+VERRIERES::~VERRIERES() {
+
+}
+
+void VERRIERES::addVerriere(VERRIERE* V) {
+    this->verrieres.push_back(V);
+}
+
+VERRIERE VERRIERES::*findByName(std::string) {
+
+}
+
+void VERRIERES::dump() {
+
+}
+
+void VERRIERES::startChildrenThreads() {
+
+}
+void VERRIERES::stopChildrenThreads() {
+
+}
+        //void VERRIERES::joinChildrenThreads();

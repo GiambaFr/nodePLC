@@ -114,10 +114,10 @@ namespace CONF {
     typedef struct Verriere {
         std::string name;
         std::string comment;
-        long open_duration_ms;
-        long close_duration_ms;
-        long open_slowdown_duration_ms;
-        long close_slowdown_duration_ms;
+        int open_duration_ms;
+        int close_duration_ms;
+        int open_slowdown_duration_ms;
+        int close_slowdown_duration_ms;
         int current_position; // 1 to 100
         std::string up_DoName;
         std::string down_DoName;
