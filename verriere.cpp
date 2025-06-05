@@ -465,7 +465,8 @@ VERRIERE::~VERRIERE() {
     this->outputDown->setState(STATE::OFF); // Assurez-vous que les deux sont éteintes à la destruction
 }
 
-
+/* =================================================================*/
+class VERRIERES;
 
 VERRIERES::VERRIERES(CONFIG* config, MyMqtt* myMqtt, Digital_Outputs *DOs) {
     for (auto verriereConf: config->getConfig()->verrieres->verrieres) {
