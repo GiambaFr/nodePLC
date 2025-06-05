@@ -32,6 +32,7 @@ Digital_Output::Digital_Output(CONFIG *config, CONF::Output *outputConf, MyMqtt 
 
   this->addStateChangeHandler([this](STATE oldState, STATE newState) {
     json j;
+    j["event"] = "STATE_CHANGE";
     j["state"] = state_to_string(newState);
     j["name"] = this->getName();
     j["comment"] = this->getComment();
@@ -45,6 +46,7 @@ Digital_Output::Digital_Output(CONFIG *config, CONF::Output *outputConf, MyMqtt 
 
   this->addDimValueChangeHandler([this](int oldDimValue, int newDimValue) {
     json j;
+    j["event"] = "DIM_VALUE_CHANGE";
     j["state"] = state_to_string(this->getState());
     j["value"] = std::to_string(newDimValue);
     j["dimCycleTime"] = std::to_string(this->getDimCycleTime());
@@ -55,6 +57,7 @@ Digital_Output::Digital_Output(CONFIG *config, CONF::Output *outputConf, MyMqtt 
 
   this->addDimCycleTimeChangeHandler([this](int oldDimCycleTime, int newDimCycleTime) {
     json j;
+    j["event"] = "DIM_CYCLE_TIME_CHANGE";
     j["state"] = state_to_string(this->getState());
     j["value"] = std::to_string(this->getDimValue());
     j["dimCycleTime"] = std::to_string(newDimCycleTime);
@@ -208,8 +211,18 @@ void Digital_Output::setRetainValue(STATE value) {
   this->saveConfig();
 }
 
+OUTPUT_TYPE Digital_Output::getType() {
+  return this->getConfigT()->type;
+}
+
+void Digital_Output::setType(OUTPUT_TYPE type) {
+  this->getConfigT()->type = type;
+  this->saveConfig();
+}
+
 bool Digital_Output::isDimmable() {
-  return this->getConfigT()->dimmable;
+  //return this->getConfigT()->dimmable;
+  return this->getType() == OUTPUT_TYPE::DIMMABLE;
 }
 
 

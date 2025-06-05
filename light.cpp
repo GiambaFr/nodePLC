@@ -34,6 +34,7 @@ LIGHT::LIGHT(CONFIG *config, CONF::Light *lightConf, MyMqtt *myMqtt): withConfig
         //save memo_value
         this->addMemoValueChangeHandler([this](int last_value, int value){
             json j;
+            j["event"] = "MEMO_VALUE_CHANGE";
             j["name"] = this->getName();
             j["comment"] = this->getComment();
             j["value"] = this->getValue();
@@ -45,6 +46,7 @@ LIGHT::LIGHT(CONFIG *config, CONF::Light *lightConf, MyMqtt *myMqtt): withConfig
     this->addValueChangeHandler([this](int last_value, int value){
         //std::cout << "last_val = " << last_value << ", new_val = " << value << std::endl << std::flush; 
         json j;
+        j["event"] = "VALUE_CHANGE";
         j["name"] = this->getName();
         j["comment"] = this->getComment();
         j["value"] = value;

@@ -45,6 +45,7 @@ Digital_Input::Digital_Input(CONFIG *config, CONF::Input* inputConf, MyMqtt *myM
 
     this->addStateChangeHandler([this](STATE oldState, STATE newState) {
       json j;
+      j["event"] = "STATE_CHANGE";
       j["state"] = state_to_string(newState);
       j["name"] = this->getName();
       j["comment"] = this->getComment();

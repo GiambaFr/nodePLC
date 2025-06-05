@@ -27,6 +27,7 @@ Temp_Sensor::Temp_Sensor(CONFIG *config, CONF::OW_Sensor* sensorConf, MyMqtt *my
 
   this->addTemperatureChangeHandler([this](float oldValue, float newValue) {
     json j;
+    j["event"] = "TEMPERATURE_CHANGE";
     j["name"] = this->getName();
     j["comment"] = this->getComment();
     j["last_temperature"] = oldValue;

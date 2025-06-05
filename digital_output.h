@@ -31,7 +31,7 @@ class Digital_Output: public withSingleThread, public withConfig<CONF::Output>, 
         STATE _read();
         std::vector<std::string> locks; // set all locks to 0 before set this to 1
 
-        
+        OUTPUT_TYPE type;
 
         void _write(STATE);
 
@@ -52,6 +52,8 @@ class Digital_Output: public withSingleThread, public withConfig<CONF::Output>, 
         STATE getRetainValue();
         void setRetainValue(STATE);
 
+        OUTPUT_TYPE getType();
+        void setType(OUTPUT_TYPE type);
         bool isDimmable();
 
         void addLock(std::string /*lock*/);
