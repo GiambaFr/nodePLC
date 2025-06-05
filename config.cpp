@@ -295,7 +295,7 @@ CONF::Config *CONFIG::getConfig() {
     return &this->config;
 }
 
-int CONFIG::load(std::string fileName) {
+void CONFIG::load(std::string fileName) {
     this->fileName = fileName;
     std::ifstream configFile(this->fileName);
     if (!configFile.is_open()) {
@@ -305,8 +305,7 @@ int CONFIG::load(std::string fileName) {
     }
     json j;
     configFile >> j;
-    this->config = j.get<CONF::Config>();  
-    return 1;   
+    this->config = j.get<CONF::Config>();   
 }
 
 void CONFIG::save() {

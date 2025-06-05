@@ -158,7 +158,7 @@ class CONFIG {
         CONFIG();
         ~CONFIG();
         CONF::Config *getConfig();
-        int load(std::string /*fileName*/);
+        void load(std::string /*fileName*/);
         void save();
 };
 
