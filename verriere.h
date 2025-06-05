@@ -1,3 +1,4 @@
+#pragma once
 #ifndef VERRIERE_H
 #define VERRIERE_H
 

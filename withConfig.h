@@ -1,3 +1,4 @@
+#pragma once
 #ifndef WITH_CONFIG_H
 #define WITH_CONFIG_H
 

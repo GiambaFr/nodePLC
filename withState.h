@@ -1,3 +1,4 @@
+#pragma once
 #ifndef WITH_STATE_H
 #define WITH_STATE_H
 

@@ -1,5 +1,7 @@
+#pragma once
 #ifndef DIGITAL_INPUT
 #define DIGITAL_INPUT
+
 #include <iostream>
 #include <vector>
 #include <functional>

@@ -7,7 +7,7 @@
 /* Denis Moreaux <vapula@endor.be>         */
 /*                                         */
 /*******************************************/
-
+#pragma once
 #ifndef DMX_H
 #define DMX_H
 

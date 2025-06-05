@@ -1,5 +1,7 @@
+#pragma once
 #ifndef COMMONS_H
 #define COMMONS_H
+
 #include <iostream>
 #include <sstream>
 #include <vector>

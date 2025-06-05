@@ -22,22 +22,18 @@ void withSingleThread::setThreadSleepTimeMillis(int st) {
     this->sleepTimeMicro = st * 1000;
 }
 
-std::thread withSingleThread::processThread() { 
-    return std::thread([&] {
-        while (this->run) {
-            this->process();
-            std::this_thread::sleep_for(std::chrono::microseconds(this->sleepTimeMicro));
-        }
-        this->_onMainThreadStop();
-    });
-}
-
 
 void withSingleThread::start(const char *name) {
     if (!this->run) {
         this->_onMainThreadStart();
         this->run = true;
-        this->main_thread = this->processThread();
+        this->main_thread = std::thread([&] {
+            while (this->run) {
+                this->process();
+                std::this_thread::sleep_for(std::chrono::microseconds(this->sleepTimeMicro));
+            }
+            this->_onMainThreadStop();
+        });//this->processThread();
         pthread_setname_np(this->main_thread.native_handle(), name);
     }
 }

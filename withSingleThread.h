@@ -1,3 +1,4 @@
+#pragma once
 #ifndef SINGLETHREADCONTAINER_H
 #define SINGLETHREADCONTAINER_H
 
@@ -6,7 +7,6 @@
 class withSingleThread {
   private:  
         std::thread main_thread;
-        std::thread processThread();
   protected:
         int sleepTimeMicro = 500*1000; //nano micro milli second min hour
         bool run = false;        
