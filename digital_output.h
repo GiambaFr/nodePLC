@@ -15,7 +15,6 @@
 #include "withMqtt.h"
 #include "withState.h"
 
-
 #define MCP23008_ADDRESS 0x20
 #define MCP23008_EXT_ADDRESS 0x24
 
@@ -30,32 +29,13 @@ class Digital_Output: public withSingleThread, public withConfig<CONF::Output>, 
         Digital_Outputs* DOs;
 
         STATE _read();
+        std::vector<std::string> locks; // set all locks to 0 before set this to 1
+
+        
 
         void _write(STATE);
 
-        std::vector<std::string> locks; // set all locks to 0 before set this to 1
 
-        OUTPUT_TYPE type;
-
-        // New fields for TIMED output
-        long timed_duration_ms;
-        long slowdown_duration_ms;
-        float current_position;
-        float target_position;
-        std::chrono::steady_clock::time_point motion_start_time;
-        std::chrono::steady_clock::time_point last_mqtt_publish_time;
-
-        using positionChangeHandlersFunc = std::function<void(float oldPosition, float newPosition)>;
-        std::vector<positionChangeHandlersFunc> positionChangeHandlers;
-        void _onPositionChange(float oldPosition, float newPosition);
-        void addPositionChangeHandler(positionChangeHandlersFunc /*function*/);
-
-        using targetChangeHandlersFunc = std::function<void(float oldTarget, float newTarget)>;
-        std::vector<targetChangeHandlersFunc> targetChangeHandlers;
-        void _onTargetChange(float oldPosition, float newPosition);
-        void addTargetChangeHandler(targetChangeHandlersFunc /*function*/);       
-
-        
     public:
         Digital_Output(CONFIG * /*config*/, CONF::Output* /*outputConf*/, MyMqtt* /*myMqtt*/, Digital_Outputs* /*DOs*/);
         ~Digital_Output();
@@ -72,11 +52,7 @@ class Digital_Output: public withSingleThread, public withConfig<CONF::Output>, 
         STATE getRetainValue();
         void setRetainValue(STATE);
 
-        OUTPUT_TYPE getType();
-        void setType(OUTPUT_TYPE type);
-
         bool isDimmable();
-        bool isTimed();
 
         void addLock(std::string /*lock*/);
         bool hasLock();
@@ -84,7 +60,6 @@ class Digital_Output: public withSingleThread, public withConfig<CONF::Output>, 
         
 
         void toggle();
-
 
         void process();
         void _onMainThreadStart();
@@ -110,6 +85,9 @@ class Digital_Outputs {
         void stopChildrenThreads();
         void joinChildrenThreads();
 
+        /*void startThread();
+        void stopThread();
+        void joinThread();*/
 };
 
 #endif

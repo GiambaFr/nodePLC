@@ -111,7 +111,7 @@ LIGHT::LIGHT(CONFIG *config, CONF::Light *lightConf, MyMqtt *myMqtt): withConfig
                 this->setBaseParams(j);
                 if (j.contains("increment") && !j["increment"].empty()) this->setIncrement(j["increment"].get<int>());
                 if (j.contains("memoValue") && !j["memoValue"].empty()) this->setMemoValue(j["memoValue"].get<int>());
-                //if (j.contains("value") && !j["value"].empty()) this->setValue(j["value"].get<int>());
+                if (j.contains("value") && !j["value"].empty()) this->setValue(j["value"].get<int>());
                 if (j.contains("channel") && !j["channel"].empty()) this->setChannel(j["channel"].get<int>());
                 if (j.contains("outputTOPIC") && !j["outputTOPIC"].empty()) this->setOutputTOPIC(j["outputTOPIC"].get<std::string>());
                 if (j.contains("type") && !j["type"].empty()) this->setType(lightType_from_string(j["type"].get<std::string>()));
@@ -182,16 +182,14 @@ int LIGHT::getChannel() {
 
 void LIGHT::setValue(int value) {
     //std::cout << "setValue(" << value <<") -> oldValue = " << this->value << std::endl << std::flush;
-    // Using load() to get current value for comparison before update
-    int current_value = this->value.load();
-    if (current_value != this->value) {
-        this->_onValueChange(current_value, value);
-        this->value.store(value); // Using store() to set value
+    if (value != this->value) {
+        this->_onValueChange(this->value, value);
+        this->value = value;
     }
 }
 
 int LIGHT::getValue() {
-    return this->value.load(); // Using load() to get value
+    return this->value;
 }
 
 void LIGHT::setMemoValue(int value) {
@@ -214,20 +212,19 @@ void LIGHT::setOutputTOPIC(std::string o) {
 }
 
 void LIGHT::dimStart() {
-    this->dimming.store(true); // Using store()
+    this->dimming = true;
 }
 
 void LIGHT::dimStop() {
-    this->dimming.store(false); // Using store()
+    this->dimming = false;
     this->setMemoValue(this->getValue());
-    this->updown.store(this->updown.load() == -1 ? 1 : -1); 
+    this->updown = this->updown == -1 ? 1:-1;
 }
 
 void LIGHT::increment() {
     if (this->getType() == LIGHT_TYPE::DIMMABLE) {
-        int current_value = this->value.load();
-        if (current_value + this->getIncrement() <= DIMMABLE_MAX_VALUE) {
-            this->setValue(current_value + this->getIncrement());
+        if (this->value + this->getIncrement() <= DIMMABLE_MAX_VALUE) {
+            this->setValue(this->value + this->getIncrement());
         } else {
             this->setValue( DIMMABLE_MAX_VALUE );
         }
@@ -236,9 +233,8 @@ void LIGHT::increment() {
 
 void LIGHT::decrement() {
     if (this->getType() == LIGHT_TYPE::DIMMABLE) {
-        int current_value = this->value.load();
-        if (current_value - this->getIncrement() >= 0) {
-            this->setValue(current_value - this->getIncrement());
+        if (this->value - this->getIncrement() >= 0) {
+            this->setValue(this->value - this->getIncrement());
         } else {
             this->setValue(0);
         }
@@ -248,20 +244,20 @@ void LIGHT::decrement() {
 void LIGHT::toggle() {
     if (this->getType() == LIGHT_TYPE::ONOFF) {
         //std::cout << this->value << ": " << (this->value == 0 ? 1 : 0) << std::endl << std::flush;
-        this->setValue(this->value.load() == 0 ? 1 : 0);
+        this->setValue(this->value == 0 ? 1 : 0);
     } else if(this->getType() == LIGHT_TYPE::DIMMABLE) {
         //std::cout << this->value << ": " << (this->value != 0 ? 0 : this->getMemoValue()) << std::endl << std::flush;
-        this->setValue(this->value.load() !=0 ? 0 : this->getMemoValue());
+        this->setValue(this->value !=0 ? 0 : this->getMemoValue());
     }
 }
 
 void LIGHT::process() {
     //process only for dim
     if (this->getType() == LIGHT_TYPE::DIMMABLE) {
-        if (this->dimming.load()) { // Using load()
-            if (this->value.load() >= DIMMABLE_MAX_VALUE) this->updown.store(-1); // Using load() and store()
-            if (this->value.load() <= 0) this->updown.store(1); // Using load() and store()
-            switch (this->updown.load()) { // Using load()
+        if (this->dimming) {
+            if (this->value >= DIMMABLE_MAX_VALUE) this->updown = -1;
+            if (this->value <= 0) this->updown = 1;
+            switch (this->updown) {
                 case 1 : this->increment(); break;
                 case -1: this->decrement(); break;
             }
@@ -315,11 +311,7 @@ void LIGHTS::addLight(LIGHT *light) {
 
 LIGHT *LIGHTS::findByName(std::string name) {
     auto it = std::find_if(this->lights.begin(), this->lights.end(), [name](LIGHT *obj) {return obj->getName() == name;});
-        // Consider adding a check here for iterator validity before dereferencing (*it)
-    if (it != this->lights.end()) {
-        return *it;
-    }
-    return nullptr; // Return nullptr if not found to avoid dereferencing an invalid iterator
+    return *it;
 }
 
 void LIGHTS::dump() {
@@ -344,7 +336,7 @@ void LIGHTS::stopChildrenThreads() {
 
 void LIGHTS::joinChildrenThreads() {
   for(std::vector<LIGHT*>::iterator it = std::begin(this->lights); it != std::end(this->lights); ++it) {
-    (*it)->processThread()->join();
+    (*it)->getProcessThread()->join();
   } 
 }
 

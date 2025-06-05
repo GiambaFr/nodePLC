@@ -143,11 +143,7 @@ void Digital_Inputs::addInput(Digital_Input *input) {
 
 Digital_Input *Digital_Inputs::findByName(std::string name) {
     auto it = std::find_if(this->inputs.begin(), this->inputs.end(), [name](Digital_Input *obj) {return obj->getName() == name;});
-        // Consider adding a check here for iterator validity before dereferencing (*it)
-    if (it != this->inputs.end()) {
-        return *it;
-    }
-    return nullptr; // Return nullptr if not found to avoid dereferencing an invalid iterator
+    return *it;
 }
 
 

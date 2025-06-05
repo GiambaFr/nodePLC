@@ -617,20 +617,19 @@
     "Verrieres": {
         "Verrieres": [
             {
-                "name": "Verriere",
-                "comment": "Verrière",
-                "open_duration_ms": 10000,
                 "close_duration_ms": 12000,
-                "open_slowdown_duration_ms": 0,
                 "close_slowdown_duration_ms": 2000,
+                "comment": "Verrière",
                 "current_position": 0,
-                "up_DoName": "DO15",
-                "down_DoName":"DO16",
-                "rain_sensor_AiName": "AI01",
+                "dispatch_TOPIC": "HousePLC/Verriere/DISPATCH",
+                "down_DoName": "DO16",
                 "get_TOPIC": "HousePLC/Verriere/GET",
+                "name": "Verriere",
+                "open_duration_ms": 10000,
+                "open_slowdown_duration_ms": 0,
+                "rain_sensor_AiName": "AI01",
                 "set_TOPIC": "HousePLC/Verriere/SET",
-                "dispatch_TOPIC": "HousePLC/Verriere/DISPATCH"
-
+                "up_DoName": "DO15"
             }
         ]
     }

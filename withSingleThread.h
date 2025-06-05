@@ -2,7 +2,6 @@
 #define SINGLETHREADCONTAINER_H
 
 #include <thread>
-#include <atomic>
 
 class withSingleThread {
   private:  
@@ -10,7 +9,7 @@ class withSingleThread {
         std::thread processThread();
   protected:
         int sleepTimeMicro = 500*1000; //nano micro milli second min hour
-        std::atomic<bool> run = false;        
+        bool run = false;        
         virtual void process();
         virtual void _onMainThreadStart();
         virtual void _onMainThreadStopping();

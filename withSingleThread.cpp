@@ -1,6 +1,5 @@
 
 #include <chrono>
-#include <utility> 
 
 #include "withSingleThread.h"
 
@@ -47,9 +46,6 @@ void withSingleThread::stop() {
     if (this->run) {
         this->_onMainThreadStopping();
         this->run = false;
-        if (this->main_thread.joinable()) { // Ensure thread is joinable before joining
-            this->main_thread.join();
-        }
     }
 }
 
@@ -70,8 +66,9 @@ std::thread *withSingleThread::getProcessThread() {
     return &this->main_thread;
 }
 
+
 withSingleThread::~withSingleThread() {
-    if (this->run) // If stop() wasn't called explicitly, ensure thread is stopped and joined
-        this->stop();
+    if (this->run)
+        this->run = false;
 }
 

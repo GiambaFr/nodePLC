@@ -17,6 +17,7 @@ namespace CONF {
         j["Digital_Outputs"] = c.outputs->getJsonConfig(c.outputs);
         j["OW"] = c.ow->getJsonConfig(c.ow);
         j["Lights"] = c.lights->getJsonConfig(c.lights);
+        j["Verrieres"] = c.verrieres->getJsonConfig(c.verrieres);
     }
 
     void from_json(const json& j, Config& c) {
@@ -128,6 +129,7 @@ namespace CONF {
             verriere->up_DoName = v["up_DoName"].get<std::string>();
             verriere->down_DoName = v["down_DoName"].get<std::string>();
             verriere->rain_sensor_AiName = v["rain_sensor_AiName"].get<std::string>();
+            c.verrieres->verrieres.push_back(verriere);
         }
 
 

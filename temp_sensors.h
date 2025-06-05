@@ -5,7 +5,6 @@
 #include <vector>
 #include <functional>
 #include <thread>
-#include <atomic> 
 
 #include <nlohmann/json.hpp>
 
@@ -22,7 +21,7 @@ using json = nlohmann::json;
 class Temp_Sensor: public withConfig<CONF::OW_Sensor>, public withSingleThread, public withMqtt {
     private:
 
-        std::atomic<float> value;
+        float value;
 
         std::string sensorPath;
 

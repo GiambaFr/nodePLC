@@ -26,7 +26,7 @@
 #include "digital_output.h"
 #include "temp_sensors.h"
 #include "light.h"
-#include "verriere.h"
+//#include "verriere.h"
 // for convenience
 using json = nlohmann::json;
 
@@ -42,7 +42,7 @@ Temp_Sensors * TempSensors;
 MyMqtt *myMqtt;
 //Buttons *buttons;
 LIGHTS *lights;
-VERRIERES *verrieres;
+//VERRIERES *verrieres;
 
 
 void signalHandler( int signum ) {
@@ -55,11 +55,11 @@ void atexit_handler()
 {
     std::cout << "Exiting application. Cleaning up resources..." << std::endl;
 
-    if (verrieres) {
-        verrieres->stopChildrenThreads(); // Assurez-vous que cette méthode existe
-        delete verrieres;
-        verrieres = nullptr;        
-    }
+    //if (verrieres) {
+    //    verrieres->stopChildrenThreads(); // Assurez-vous que cette méthode existe
+    //    delete verrieres;
+    //    verrieres = nullptr;        
+    //}
 
     // cleanup and close up stuff here
     if (lights) {
@@ -119,14 +119,14 @@ int main(int argc, char** argv) {
     Outputs = new Digital_Outputs(config, myMqtt);
     TempSensors = new Temp_Sensors(config, myMqtt);
     lights = new LIGHTS(config, myMqtt);
-    verrieres = new VERRIERES(config, myMqtt, Outputs);
+    //verrieres = new VERRIERES(config, myMqtt, Outputs);
 
 
     Inputs->startChildrenThreads();
     Outputs->startChildrenThreads(); // for dimmable output, need of thread for pwm
     TempSensors->startChildrenThreads();
     lights->startChildrenThreads();
-    verrieres->startChildrenThreads();
+    //verrieres->startChildrenThreads();
 
     myMqtt->connect();
 
@@ -136,7 +136,7 @@ int main(int argc, char** argv) {
     TempSensors->joinChildrenThreads();
     Outputs->joinChildrenThreads();
     Inputs->joinChildrenThreads();
-    verrieres->joinChildrenThreads();
+    //verrieres->joinChildrenThreads();
 
     return EXIT_SUCCESS;
 }
