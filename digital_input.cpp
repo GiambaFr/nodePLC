@@ -143,7 +143,11 @@ void Digital_Inputs::addInput(Digital_Input *input) {
 
 Digital_Input *Digital_Inputs::findByName(std::string name) {
     auto it = std::find_if(this->inputs.begin(), this->inputs.end(), [name](Digital_Input *obj) {return obj->getName() == name;});
-    return *it;
+        // Consider adding a check here for iterator validity before dereferencing (*it)
+    if (it != this->inputs.end()) {
+        return *it;
+    }
+    return nullptr; // Return nullptr if not found to avoid dereferencing an invalid iterator
 }
 
 
@@ -168,11 +172,11 @@ void Digital_Inputs::stopChildrenThreads() {
   } 
 }
 
-void Digital_Inputs::joinChildrenThreads() {
+/*void Digital_Inputs::joinChildrenThreads() {
   for(std::vector<Digital_Input*>::iterator it = std::begin(this->inputs); it != std::end(this->inputs); ++it) {
     (*it)->getProcessThread()->join();
   } 
-}
+}*/
 
 
 Digital_Inputs::~Digital_Inputs() {

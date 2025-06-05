@@ -25,7 +25,6 @@
 #include "digital_input.h"
 #include "digital_output.h"
 #include "temp_sensors.h"
-//#include "buttons.h"
 #include "light.h"
 
 // for convenience
@@ -45,7 +44,6 @@ MyMqtt *myMqtt;
 LIGHTS *lights;
 
 
-
 void signalHandler( int signum ) {
    std::cout << "Interrupt signal (" << signum << ") received.\n";
    // terminate program  
@@ -54,22 +52,40 @@ void signalHandler( int signum ) {
 
 void atexit_handler() 
 {
-    // cleanup and close up stuff here
-    lights->stopChildrenThreads();
-    //buttons->stopChildrenThreads();
-    TempSensors->stopChildrenThreads();
-    Outputs->stopChildrenThreads();
-    Inputs->stopChildrenThreads();
-    //Wait for COUT
-    std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+    std::cout << "Exiting application. Cleaning up resources..." << std::endl;
 
-    delete lights;
-    //delete buttons;
-    delete TempSensors;
-    delete Outputs;
-    delete Inputs;
-    delete myMqtt;
-    delete config;
+    // cleanup and close up stuff here
+    if (lights) {
+        lights->stopChildrenThreads(); // Assurez-vous que cette méthode existe
+        delete lights;
+        lights = nullptr;
+    }
+     if (TempSensors) {
+        TempSensors->stopChildrenThreads(); // Assurez-vous que cette méthode existe
+        delete TempSensors;
+        TempSensors = nullptr;
+    }
+    if (Outputs) {
+        Outputs->stopChildrenThreads(); // Assurez-vous que cette méthode existe
+        delete Outputs;
+        Outputs = nullptr;
+    }
+    if (Inputs) {
+        Inputs->stopChildrenThreads(); // Assurez-vous que cette méthode existe
+        delete Inputs;
+        Inputs = nullptr;
+    }
+    if (myMqtt) {
+        // Supposons que votre MyMqtt a une méthode pour désabonner ou déconnecter
+        delete myMqtt;
+        myMqtt = nullptr;
+    }
+    if (config) {
+        // Le destructeur de CONFIG devrait gérer la désallocation de ses membres (mqtt, inputs, etc.)
+        delete config;
+        config = nullptr;
+    }
+    std::cout << "Cleanup complete." << std::endl;
 }
  
 std::string getCWD(char *argv0) {
@@ -83,43 +99,34 @@ int main(int argc, char** argv) {
     signal( SIGINT, signalHandler );  
     signal( SIGTERM, signalHandler );
     signal( SIGKILL, signalHandler );
-    signal(SIGPIPE, SIG_IGN);
+    //signal(SIGPIPE, SIG_IGN);
     std::atexit(atexit_handler);
 
     config = new CONFIG();
-    cout << "test" << endl;
-    //cout.flush();
-    //cout << argv[1] << "/config.json" << endl;
-    //cout << "test" << endl;
-    //cout.flush();
-    //std::string path = argv[1];
-    //config->load(path + "/config.json");
+    cout << "Loading configuration..." << endl;
     config->load("/root/projects/nodePLC/build/config.json");
-    //cout << "test" << endl;
-    //cout.flush();
+    cout << "Configuration loaded." << endl;
 
     myMqtt = new MyMqtt(config);
     Inputs = new Digital_Inputs(config, myMqtt);
     Outputs = new Digital_Outputs(config, myMqtt);
     TempSensors = new Temp_Sensors(config, myMqtt);
-    //buttons = new Buttons(config, myMqtt);
     lights = new LIGHTS(config, myMqtt);
+
 
     Inputs->startChildrenThreads();
     Outputs->startChildrenThreads(); // for dimmable output, need of thread for pwm
     TempSensors->startChildrenThreads();
-    //buttons->startChildrenThreads();
     lights->startChildrenThreads();
 
     myMqtt->connect();
 
 
     //Wait for thread to stop
-    lights->joinChildrenThreads();
-    //buttons->joinChildrenThreads();
-    TempSensors->joinChildrenThreads();
-    Outputs->joinChildrenThreads();
-    Inputs->joinChildrenThreads();
+    //lights->joinChildrenThreads();
+    //TempSensors->joinChildrenThreads();
+    //Outputs->joinChildrenThreads();
+    //Inputs->joinChildrenThreads();
 
     return EXIT_SUCCESS;
 }

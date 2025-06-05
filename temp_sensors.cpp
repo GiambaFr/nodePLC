@@ -163,16 +163,18 @@ void Temp_Sensor::_onTemperatureChange(float oldValue, float newValue) {
 }
 
 float Temp_Sensor::getValue() {
-    return this->value;
+    return this->value.load(); // Use atomic load
 }
 
 
 void Temp_Sensor::process() {
   //std::cout << "reading " << this->getName() << "... " << std::endl << std::flush;
     float newValue = this->_read();
-    if (newValue != BAD_VALUE && newValue != this->value) {
-        this->_onTemperatureChange(this->value, newValue);
-        this->value = newValue;
+    if (newValue != BAD_VALUE) {
+       if (newValue != this->value.load()) {
+        this->_onTemperatureChange(this->value.load(), newValue);
+        this->value.store(newValue);
+      }
     }
     //std::cout << this->getName() << " = " << newValue << std::endl << std::flush;
 }
@@ -232,7 +234,11 @@ void Temp_Sensors::addTempSensor(Temp_Sensor *sensor) {
 
 Temp_Sensor *Temp_Sensors::findByName(std::string name) {
     auto it = std::find_if(this->sensors.begin(), this->sensors.end(), [name](Temp_Sensor *obj) {return obj->getName() == name;});
-    return *it;
+    // Consider adding a check here for iterator validity before dereferencing (*it)
+    if (it != this->sensors.end()) {
+        return *it;
+    }
+    return nullptr; // Return nullptr if not found to avoid dereferencing an invalid iterator;
 }
 
 
@@ -256,11 +262,11 @@ void Temp_Sensors::stopChildrenThreads() {
   } 
 }
 
-void Temp_Sensors::joinChildrenThreads() {
+/*void Temp_Sensors::joinChildrenThreads() {
   for(std::vector<Temp_Sensor*>::iterator it = std::begin(this->sensors); it != std::end(this->sensors); ++it) {
     (*it)->getProcessThread()->join();
   } 
-}
+}*/
 
 Temp_Sensors::~Temp_Sensors() {
   for(std::vector<Temp_Sensor*>::iterator it = std::begin(this->sensors); it != std::end(this->sensors); ++it) {

@@ -51,7 +51,7 @@ class Digital_Inputs {
         void dump();
         void startChildrenThreads();
         void stopChildrenThreads();
-        void joinChildrenThreads();
+        //void joinChildrenThreads();
 };
 
 #endif

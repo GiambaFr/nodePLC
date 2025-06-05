@@ -6,6 +6,7 @@
 #include <vector>
 #include <string>
 #include <algorithm>
+#include <functional> 
 
 #include "commons.h"
 
@@ -15,7 +16,7 @@
 class BT {
     private:
         STATE lastState;
-        STATE curState;
+        //STATE curState;
 
         std::chrono::steady_clock::time_point pressedTime;
         std::chrono::steady_clock::time_point releasedTime;

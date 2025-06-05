@@ -1,64 +1,118 @@
-#pragma once
+#ifndef VERRIERE_H
+#define VERRIERE_H
 
-#include <string>
-#include <chrono>
-#include <functional>
-#include <thread>
-#include <atomic>
-#include <mutex>
+
 #include <nlohmann/json.hpp>
+#include <vector>
+#include <atomic>
 
-#include "commons.h" // Assurez-vous que commons.h contient les définitions d'énumération
+#include "dmx.h"
+#include "commons.h"
+#include "digital_output.h"
 
-class Verriere {
-public:
-    // Constructor
-    Verriere(const std::string& name,
-             const std::string& get_topic,
-             const std::string& set_topic,
-             const std::string& dispatch_topic,
-             int open_time_ms,
-             int close_time_ms,
-             int slowdown_time_ms);
-    // Destructor
-    ~Verriere();
+#include "withConfig.h"
+#include "withMqtt.h"
+#include "withSingleThread.h"
+#include "withState.h"
 
-    // Processes incoming MQTT command messages
-    void handleMqttSet(const std::string& payload);
-    // Returns the current state of the verriere
-    VERRIERE_STATE getState() const;
-    // Returns the current position in percentage (0-100)
-    int getPosition() const;
+using json = nlohmann::json;
 
-    // Sets the callback function for MQTT publishing
-    void setMqttPublishCallback(std::function<void(const std::string& topic, const std::string& payload)> callback);
+class VERRIERE: public withConfig<CONF::Verriere>, public withSingleThread, public withState<VERRIERE_STATE>, public withMqtt {
+    private:
 
-    // Starts the verriere's internal thread
-    void start();
-    // Stops the verriere's internal thread
-    void stop();
+        Digital_Output* outputUp;
+        Digital_Output* outputDown;
 
-private:
-    std::string name;
-    std::string get_TOPIC;
-    std::string set_TOPIC;
-    std::string dispatch_TOPIC;
+        std::atomic<bool> init;
+        std::atomic<bool> stop_motion_thread; // Flag pour arrêter le thread de mouvement
+        std::thread motion_thread; // Thread pour le calcul de la position
+        
+        //todo Analog_Input;
 
-    std::atomic<VERRIERE_STATE> currentState;
-    std::atomic<int> currentPosition; // 0 = closed, 100 = open
-    std::atomic<int> targetPosition;
+        /* --- FROM CONFIG --- */
+        /*
+            std::string name;
+            std::string comment;
+            long open_duration_ms;
+            long close_duration_ms;
+            long slowdown_duration_ms;
+            int current_position; // 1 to 100
+            std::string up_DoName;
+            std::string down_DoName;
+            std::string rain_sensor_AiName;
+            std::string get_TOPIC;
+            std::string set_TOPIC;
+            std::string dispatch_TOPIC;
+        */
 
-    int openTimeMs; // Total time to open from 0 to 100%
-    int closeTimeMs; // Total time to close from 100 to 0%
-    int slowdownTimeMs; // Time for slowdown at the end of closing
+        VERRIERE_STATE state;
+        int current_position;
+        int target_position;
+        std::chrono::steady_clock::time_point motion_start_time;
+        std::chrono::steady_clock::time_point last_mqtt_publish_time;
 
-    std::atomic<bool> isMoving;
-    std::thread movementThread;
-    std::mutex verriereMutex; // Mutex to protect shared variables
-    std::function<void(const std::string& topic, const std::string& payload)> mqttPublishCallback;
+        using positionChangeHandlersFunc = std::function<void(int oldPosition, int newPosition)>;
+        std::vector<positionChangeHandlersFunc> positionChangeHandlers;
+        void _onPositionChange(int oldPosition, int newPosition);
+        void addPositionChangeHandler(positionChangeHandlersFunc /*function*/);
 
-    // Main function for the movement thread
-    void movementLoop();
-    // Publishes the current position via MQTT
-    void publishPosition();
+        using targetChangeHandlersFunc = std::function<void(int oldTarget, int newTarget)>;
+        std::vector<targetChangeHandlersFunc> targetChangeHandlers;
+        void _onTargetChange(int oldPosition, int newPosition);
+        void addTargetChangeHandler(targetChangeHandlersFunc /*function*/); 
+
+        // Nouvelle fonction pour calculer la position basée sur le temps et le mouvement
+        int calculateCurrentPositionBasedOnTime();
+        // Fonction exécutée par le thread de mouvement
+        void motionCalculationThread();
+
+    public:
+        VERRIERE(CONFIG* /*config*/, CONF::Verriere* /*lightConf*/, MyMqtt* /*myMqtt*/, Digital_Output*, Digital_Output* /*, TODO:: Analog_Input*/);
+        ~VERRIERE();
+
+        long getOpenDurationMs();
+        void setOpenDurationMs(long duration);
+        long getCloseDurationMs();
+        void setCloseDurationMs(long duration);
+        long getOpenSlowdownDurationMs();
+        void setOpenSlowdownDurationMs(long duration);
+        long getCloseSlowdownDurationMs();
+        void setCloseSlowdownDurationMs(long duration);
+        int getCurrentPosition();
+        void setCurrentPosition(int position);
+        int getTargetPosition();
+        void setTargetPosition(int position);
+        std::string getOutputUp();
+        std::string getOutputDown();
+        std::string getAIRainSensor();
+
+
+
+        
+        void process();
+        void _onMainThreadStart();
+        void _onMainThreadStopping();
+        void _onMainThreadStop();
+
 };
+
+class VERRIERES {
+    private:
+        std::vector<VERRIERE*> verrieres;
+
+
+    public:
+        VERRIERES(CONFIG* /*config*/, MyMqtt*);
+        ~VERRIERES();
+
+        void addVerriere(VERRIERE*);
+        VERRIERE *findByName(std::string);
+        void dump();
+
+        void startChildrenThreads();
+        void stopChildrenThreads();
+        //void joinChildrenThreads();
+
+};
+
+#endif

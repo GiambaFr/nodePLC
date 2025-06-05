@@ -1,3 +1,5 @@
+
+
 #include "threadPool.h"
 
 #include "bt.h"
@@ -99,8 +101,8 @@ void BT::process(STATE curState) {
 void BT::_onAction(BUTTON_ACTION btAction, unsigned int clickCount){
   for(auto&& handler : this->actionHandlers) {
     //std::thread(handler, btAction, clickCount).detach();
-    //threadPool.push_task(handler, btAction, clickCount);
-    handler(btAction, clickCount);
+    threadPool.push_task(handler, btAction, clickCount);
+    //handler(btAction, clickCount);
   }
 }
 

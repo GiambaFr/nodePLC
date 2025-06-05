@@ -193,7 +193,6 @@
         "Outputs": [
             {
                 "comment": "Eclairage douche",
-                "dimmable": false,
                 "dispatch_TOPIC": "HousePLC/Digital_Outputs/DO1",
                 "forced": false,
                 "forcedValue": "OFF",
@@ -203,11 +202,11 @@
                 "pin": 7,
                 "retain": false,
                 "retainValue": "OFF",
-                "set_TOPIC": "HousePLC/Digital_Outputs/DO1/SET"
+                "set_TOPIC": "HousePLC/Digital_Outputs/DO1/SET",
+                "type": "RELAY"
             },
             {
                 "comment": "NC",
-                "dimmable": false,
                 "dispatch_TOPIC": "HousePLC/Digital_Outputs/DO2",
                 "forced": false,
                 "forcedValue": "OFF",
@@ -217,11 +216,11 @@
                 "pin": 6,
                 "retain": false,
                 "retainValue": "OFF",
-                "set_TOPIC": "HousePLC/Digital_Outputs/DO2/SET"
+                "set_TOPIC": "HousePLC/Digital_Outputs/DO2/SET",
+                "type": "RELAY"
             },
             {
                 "comment": "Eclairage palier",
-                "dimmable": false,
                 "dispatch_TOPIC": "HousePLC/Digital_Outputs/DO3",
                 "forced": false,
                 "forcedValue": "OFF",
@@ -231,11 +230,11 @@
                 "pin": 5,
                 "retain": false,
                 "retainValue": "OFF",
-                "set_TOPIC": "HousePLC/Digital_Outputs/DO3/SET"
+                "set_TOPIC": "HousePLC/Digital_Outputs/DO3/SET",
+                "type": "RELAY"
             },
             {
                 "comment": "NC",
-                "dimmable": false,
                 "dispatch_TOPIC": "HousePLC/Digital_Outputs/DO4",
                 "forced": false,
                 "forcedValue": "OFF",
@@ -245,11 +244,11 @@
                 "pin": 4,
                 "retain": false,
                 "retainValue": "OFF",
-                "set_TOPIC": "HousePLC/Digital_Outputs/DO4/SET"
+                "set_TOPIC": "HousePLC/Digital_Outputs/DO4/SET",
+                "type": "RELAY"
             },
             {
                 "comment": "NC",
-                "dimmable": false,
                 "dispatch_TOPIC": "HousePLC/Digital_Outputs/DO5",
                 "forced": false,
                 "forcedValue": "OFF",
@@ -259,11 +258,11 @@
                 "pin": 3,
                 "retain": false,
                 "retainValue": "OFF",
-                "set_TOPIC": "HousePLC/Digital_Outputs/DO5/SET"
+                "set_TOPIC": "HousePLC/Digital_Outputs/DO5/SET",
+                "type": "RELAY"
             },
             {
                 "comment": "NC",
-                "dimmable": false,
                 "dispatch_TOPIC": "HousePLC/Digital_Outputs/DO6",
                 "forced": false,
                 "forcedValue": "OFF",
@@ -273,11 +272,11 @@
                 "pin": 2,
                 "retain": false,
                 "retainValue": "OFF",
-                "set_TOPIC": "HousePLC/Digital_Outputs/DO6/SET"
+                "set_TOPIC": "HousePLC/Digital_Outputs/DO6/SET",
+                "type": "RELAY"
             },
             {
                 "comment": "Eclairage exterieur",
-                "dimmable": false,
                 "dispatch_TOPIC": "HousePLC/Digital_Outputs/DO7",
                 "forced": false,
                 "forcedValue": "OFF",
@@ -287,11 +286,11 @@
                 "pin": 1,
                 "retain": false,
                 "retainValue": "OFF",
-                "set_TOPIC": "HousePLC/Digital_Outputs/DO7/SET"
+                "set_TOPIC": "HousePLC/Digital_Outputs/DO7/SET",
+                "type": "RELAY"
             },
             {
                 "comment": "GV VMC",
-                "dimmable": false,
                 "dispatch_TOPIC": "HousePLC/Digital_Outputs/DO8",
                 "forced": false,
                 "forcedValue": "OFF",
@@ -301,11 +300,11 @@
                 "pin": 0,
                 "retain": false,
                 "retainValue": "OFF",
-                "set_TOPIC": "HousePLC/Digital_Outputs/DO8/SET"
+                "set_TOPIC": "HousePLC/Digital_Outputs/DO8/SET",
+                "type": "RELAY"
             },
             {
                 "comment": "Chaudiere pompe",
-                "dimmable": false,
                 "dispatch_TOPIC": "HousePLC/Digital_Outputs/DO9",
                 "forced": false,
                 "forcedValue": "OFF",
@@ -315,11 +314,11 @@
                 "pin": 15,
                 "retain": false,
                 "retainValue": "OFF",
-                "set_TOPIC": "HousePLC/Digital_Outputs/DO9/SET"
+                "set_TOPIC": "HousePLC/Digital_Outputs/DO9/SET",
+                "type": "RELAY"
             },
             {
                 "comment": "Vanne 3 voies PLUS",
-                "dimmable": true,
                 "dispatch_TOPIC": "HousePLC/Digital_Outputs/DO10",
                 "forced": false,
                 "forcedValue": "OFF",
@@ -331,11 +330,11 @@
                 "pin": 14,
                 "retain": false,
                 "retainValue": "OFF",
-                "set_TOPIC": "HousePLC/Digital_Outputs/DO10/SET"
+                "set_TOPIC": "HousePLC/Digital_Outputs/DO10/SET",
+                "type": "DIMMABLE"
             },
             {
                 "comment": "Vanne 3 voies MOINS",
-                "dimmable": true,
                 "dispatch_TOPIC": "HousePLC/Digital_Outputs/DO11",
                 "forced": false,
                 "forcedValue": "OFF",
@@ -347,11 +346,11 @@
                 "pin": 13,
                 "retain": false,
                 "retainValue": "OFF",
-                "set_TOPIC": "HousePLC/Digital_Outputs/DO11/SET"
+                "set_TOPIC": "HousePLC/Digital_Outputs/DO11/SET",
+                "type": "DIMMABLE"
             },
             {
                 "comment": "Chauffe_eau pompe",
-                "dimmable": false,
                 "dispatch_TOPIC": "HousePLC/Digital_Outputs/DO12",
                 "forced": false,
                 "forcedValue": "OFF",
@@ -361,11 +360,11 @@
                 "pin": 12,
                 "retain": false,
                 "retainValue": "OFF",
-                "set_TOPIC": "HousePLC/Digital_Outputs/DO12/SET"
+                "set_TOPIC": "HousePLC/Digital_Outputs/DO12/SET",
+                "type": "RELAY"
             },
             {
                 "comment": "Chaudiere bruleur",
-                "dimmable": false,
                 "dispatch_TOPIC": "HousePLC/Digital_Outputs/DO13",
                 "forced": false,
                 "forcedValue": "OFF",
@@ -375,11 +374,11 @@
                 "pin": 11,
                 "retain": false,
                 "retainValue": "OFF",
-                "set_TOPIC": "HousePLC/Digital_Outputs/DO13/SET"
+                "set_TOPIC": "HousePLC/Digital_Outputs/DO13/SET",
+                "type": "RELAY"
             },
             {
                 "comment": "Chauffe_eau resistance",
-                "dimmable": false,
                 "dispatch_TOPIC": "HousePLC/Digital_Outputs/DO14",
                 "forced": false,
                 "forcedValue": "OFF",
@@ -389,11 +388,11 @@
                 "pin": 10,
                 "retain": false,
                 "retainValue": "OFF",
-                "set_TOPIC": "HousePLC/Digital_Outputs/DO14/SET"
+                "set_TOPIC": "HousePLC/Digital_Outputs/DO14/SET",
+                "type": "RELAY"
             },
             {
                 "comment": "Ouvrir verriere",
-                "dimmable": false,
                 "dispatch_TOPIC": "HousePLC/Digital_Outputs/DO15",
                 "forced": false,
                 "forcedValue": "OFF",
@@ -405,11 +404,11 @@
                 "pin": 9,
                 "retain": false,
                 "retainValue": "OFF",
-                "set_TOPIC": "HousePLC/Digital_Outputs/DO15/SET"
+                "set_TOPIC": "HousePLC/Digital_Outputs/DO15/SET",
+                "type": "RELAY"
             },
             {
                 "comment": "Fermer verriere",
-                "dimmable": false,
                 "dispatch_TOPIC": "HousePLC/Digital_Outputs/DO16",
                 "forced": false,
                 "forcedValue": "OFF",
@@ -421,7 +420,8 @@
                 "pin": 8,
                 "retain": false,
                 "retainValue": "OFF",
-                "set_TOPIC": "HousePLC/Digital_Outputs/DO16/SET"
+                "set_TOPIC": "HousePLC/Digital_Outputs/DO16/SET",
+                "type": "RELAY"
             }
         ]
     },

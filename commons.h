@@ -24,7 +24,7 @@ enum class VERRIERE_STATE { NOT_SET, VERRIERE_STOP, VERRIERE_MOVING_DOWN, VERRIE
 std::string verriereState_to_string(VERRIERE_STATE state);
 VERRIERE_STATE verriereState_from_string(std::string s);
 
-enum class VERRIERE_ACTION { VERRIERE_STOP, VERRIERE_DOWN, VERRIERE_UP, SET_PERCENTAGE };
+enum class VERRIERE_ACTION { VERRIERE_STOP, VERRIERE_DOWN, VERRIERE_UP, SET_PERCENTAGE, VERRIERE_INIT };
 std::string verriereAction_to_string(VERRIERE_ACTION verriereAction);
 VERRIERE_ACTION verriereAction_from_string(std::string s);
 

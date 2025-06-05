@@ -30,7 +30,7 @@ VERRIERE_STATE verriereState_from_string(std::string s) {
     return static_cast<VERRIERE_STATE>(std::distance(verriereStateStr.begin(), itr));
 }
 
-std::vector<std::string> verriereActionStr = {"VERRIERE_STOP", "VERRIERE_DOWN", "VERRIERE_UP", "SET_PERCENTAGE"};
+std::vector<std::string> verriereActionStr = {"VERRIERE_STOP", "VERRIERE_DOWN", "VERRIERE_UP", "SET_PERCENTAGE", "VERRIERE_INIT"};
 std::string verriereAction_to_string(VERRIERE_ACTION verriereAction) { return verriereActionStr[static_cast<int>(verriereAction)]; }
 VERRIERE_ACTION verriereAction_from_string(std::string s) {
     auto itr = std::find(verriereActionStr.begin(), verriereActionStr.end(), s);

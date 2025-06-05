@@ -17,7 +17,6 @@ namespace CONF {
         j["Digital_Outputs"] = c.outputs->getJsonConfig(c.outputs);
         j["OW"] = c.ow->getJsonConfig(c.ow);
         j["Lights"] = c.lights->getJsonConfig(c.lights);
-        j["Verrieres"] = c.verrieres->getJsonConfig(c.verrieres);
     }
 
     void from_json(const json& j, Config& c) {
@@ -114,19 +113,22 @@ namespace CONF {
         }
 
         c.verrieres = new CONF::Verrieres();
-        for(auto& vs: j["Verrieres"]["Verriere"]) {
-            Verriere *v = new CONF::Verriere();
-            v->name = vs["name"].get<std::string>();
-            v->comment = vs["comment"].get<std::string>();
-            v->open_time_ms = vs["open_time_ms"].get<int>();
-            v->close_time_ms = vs["close_time_ms"].get<int>();
-            v->slowdown_time_ms = vs["slowdown_time_ms"].get<int>();
-            v->get_TOPIC = vs["get_TOPIC"].get<std::string>();
-            v->set_TOPIC = vs["set_TOPIC"].get<std::string>();
-            v->dispatch_TOPIC = vs["dispatch_TOPIC"].get<std::string>();
-            c.verrieres->verrieres.push_back(v);
+        for(auto& v: j['Verrires']['Verrieres']) {
+            Verriere *verriere = new CONF::Verriere();
+            verriere->name = v["name"].get<std::string>();
+            verriere->comment = v["comment"].get<std::string>();
+            verriere->set_TOPIC = v["set_TOPIC"].get<std::string>();
+            verriere->get_TOPIC = v["get_TOPIC"].get<std::string>();
+            verriere->dispatch_TOPIC = v["dispatch_TOPIC"].get<std::string>();
+            verriere->open_duration_ms = v["open_duration_ms"].get<long>();
+            verriere->close_duration_ms = v["close_duration_ms"].get<long>();
+            verriere->open_slowdown_duration_ms = v["open_slowdown_duration_ms"].get<long>();
+            verriere->close_slowdown_duration_ms = v["close_slowdown_duration_ms"].get<long>();
+            verriere->current_position = v["current_position"].get<int>();
+            verriere->up_DoName = v["up_DoName"].get<long>();
+            verriere->down_DoName = v["down_DoName"].get<long>();
+            verriere->rain_sensor_AiName = v["rain_sensor_AiName"].get<float>();
         }
-
 
 
     }
@@ -256,18 +258,25 @@ json CONF::Lights::getJsonConfig(CONF::Lights *lights){
     return j;
 }
 
-json CONF::Verriere::getJsonConfig(CONF::Verriere* verriere){
+
+json CONF::Verriere::getJsonConfig(CONF::Verriere *verriere){
     json v;
     v["name"] = verriere->name;
     v["comment"] = verriere->comment;
-    v["open_time_ms"] = verriere->open_time_ms;
-    v["close_time_ms"] = verriere->close_time_ms;
-    v["slowdown_time_ms"] = verriere->slowdown_time_ms;
+    v["open_duration_ms"] = verriere->open_duration_ms;
+    v["close_duration_ms"] = verriere->close_duration_ms;
+    v["open_slowdown_duration_ms"] = verriere->open_slowdown_duration_ms;
+    v["close_slowdown_duration_ms"] = verriere->close_slowdown_duration_ms;
+    v["up_DoName"] = verriere->up_DoName;
+    v["down_DoName"] = verriere->down_DoName;
+    v["rain_sensor_AiName"] = verriere->rain_sensor_AiName;
+    v["current_position"] = verriere->current_position;
     v["get_TOPIC"] = verriere->get_TOPIC;
     v["set_TOPIC"] = verriere->set_TOPIC;
     v["dispatch_TOPIC"] = verriere->dispatch_TOPIC;
     return v;
 }
+
 
 json CONF::Verrieres::getJsonConfig(CONF::Verrieres *verrieres){
     json j;
@@ -278,14 +287,8 @@ json CONF::Verrieres::getJsonConfig(CONF::Verrieres *verrieres){
     return j;
 }
 
-
 CONFIG::CONFIG() {
-    this->config.mqtt = nullptr;
-    this->config.inputs = nullptr;
-    this->config.outputs = nullptr;
-    this->config.ow = nullptr;
-    this->config.lights = nullptr;
-    this->config.verrieres = nullptr; // Initialize in constructor
+
 }
 
 CONF::Config *CONFIG::getConfig() {

@@ -60,9 +60,8 @@ namespace CONF {
         std::string set_TOPIC;
         std::string dispatch_TOPIC;
         std::vector<std::string> locks;
-        json getJsonConfig(CONF::Output*);
-        //bool dimmable;
         OUTPUT_TYPE type;
+        json getJsonConfig(CONF::Output*);
     } Output;
 
     typedef struct Digital_Outputs {
@@ -111,13 +110,18 @@ namespace CONF {
         std::vector<Light*> lights;
         json getJsonConfig(CONF::Lights*);
     } Lights;
-
+ 
     typedef struct Verriere {
         std::string name;
         std::string comment;
-        int open_time_ms;
-        int close_time_ms;
-        int slowdown_time_ms;
+        long open_duration_ms;
+        long close_duration_ms;
+        long open_slowdown_duration_ms;
+        long close_slowdown_duration_ms;
+        int current_position; // 1 to 100
+        std::string up_DoName;
+        std::string down_DoName;
+        std::string rain_sensor_AiName;
         std::string get_TOPIC;
         std::string set_TOPIC;
         std::string dispatch_TOPIC;
@@ -128,7 +132,8 @@ namespace CONF {
         std::vector<Verriere*> verrieres;
         json getJsonConfig(CONF::Verrieres*);
     } Verrieres;
- 
+
+
     struct Config {
         Mqtt *mqtt;
         Digital_Inputs *inputs;
@@ -141,7 +146,7 @@ namespace CONF {
     void to_json(json& j, const Config& c);
     void from_json(const json& j, Config& c);
 
-}
+};
 
 
 

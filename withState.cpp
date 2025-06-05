@@ -100,3 +100,4 @@ template<typename StateType>
 withState<StateType>::~withState() {}
 
 template class withState<STATE>;
+template class withState<VERRIERE_STATE>;

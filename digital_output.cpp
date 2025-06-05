@@ -12,6 +12,8 @@
 #include "commons.h"
 #include "digital_output.h"
 
+#include "threadPool.h"
+
 
 using namespace std;
 using json = nlohmann::json;
@@ -23,6 +25,7 @@ Digital_Output::Digital_Output(CONFIG *config, CONF::Output *outputConf, MyMqtt 
 
 
   pinMode(this->getPin(), OUTPUT);
+
 
   this->addStateChangeHandler([this](STATE oldState, STATE newState) {
     if (newState != STATE::DIM) {
@@ -36,8 +39,8 @@ Digital_Output::Digital_Output(CONFIG *config, CONF::Output *outputConf, MyMqtt 
     j["name"] = this->getName();
     j["comment"] = this->getComment();
     if (this->isDimmable()) {
-      j["value"] = std::to_string(this->getDimValue());
-      j["dimCycleTime"] = std::to_string(this->getDimCycleTime());
+      j["value"] = this->getDimValue();
+      j["dimCycleTime"] = this->getDimCycleTime();
     } 
     this->getMqtt()->publish(this->getDispatchTOPIC(), j, false);
   });
@@ -46,8 +49,8 @@ Digital_Output::Digital_Output(CONFIG *config, CONF::Output *outputConf, MyMqtt 
   this->addDimValueChangeHandler([this](int oldDimValue, int newDimValue) {
     json j;
     j["state"] = state_to_string(this->getState());
-    j["value"] = std::to_string(newDimValue);
-    j["dimCycleTime"] = std::to_string(this->getDimCycleTime());
+    j["value"] = newDimValue;
+    j["dimCycleTime"] = this->getDimCycleTime();
     j["name"] = this->getName();
     j["comment"] = this->getComment();
     this->getMqtt()->publish(this->getDispatchTOPIC(), j, false);
@@ -56,13 +59,17 @@ Digital_Output::Digital_Output(CONFIG *config, CONF::Output *outputConf, MyMqtt 
   this->addDimCycleTimeChangeHandler([this](int oldDimCycleTime, int newDimCycleTime) {
     json j;
     j["state"] = state_to_string(this->getState());
-    j["value"] = std::to_string(this->getDimValue());
-    j["dimCycleTime"] = std::to_string(newDimCycleTime);
+    j["value"] = this->getDimValue();
+    j["dimCycleTime"] = newDimCycleTime;
     j["name"] = this->getName();
     j["comment"] = this->getComment();
     this->getMqtt()->publish(this->getDispatchTOPIC(), j, false);
   });
 
+
+
+
+ 
 
   for(auto lock: this->getConfigT()->locks) {
     this->addLock(lock);
@@ -118,7 +125,7 @@ Digital_Output::Digital_Output(CONFIG *config, CONF::Output *outputConf, MyMqtt 
         }
         //dimCycleTime
         if (j.contains("dimCycleTime") && !j["dimCycleTime"].empty()) {
-          int dimCycleTime = j["value"].get<int>();
+          int dimCycleTime = j["dimCycleTime"].get<int>();
           if ( dimCycleTime >= 100 ) {
             this->setDimCycleTime(dimCycleTime);
           }
@@ -137,8 +144,8 @@ Digital_Output::Digital_Output(CONFIG *config, CONF::Output *outputConf, MyMqtt 
         json j = this->getConfigT()->getJsonConfig(this->getConfigT());
         j["state"] = state_to_string(this->getState());
         if (this->isDimmable()) {
-          j["value"] = std::to_string(this->getDimValue());
-          j["dimCycleTime"] = std::to_string(this->getDimCycleTime());
+          j["value"] = this->getDimValue();
+          j["dimCycleTime"] = this->getDimCycleTime();
         } 
         this->getMqtt()->publish(this->getDispatchTOPIC(), j, false);
       }
@@ -257,7 +264,6 @@ void Digital_Output::toggle() {
   this->setState(this->getState() == (STATE::OFF) ? STATE::ON : STATE::OFF);
 }
 
-
 void Digital_Output::process() {
   if (this->isDimmable() && this->getState() == STATE::DIM) {
     int onTime = std::lround( (static_cast<float>(this->getDimValue()) / 100) * this->getDimCycleTime());
@@ -267,6 +273,30 @@ void Digital_Output::process() {
     std::this_thread::sleep_for(std::chrono::milliseconds(this->getDimCycleTime() - onTime));
   }
 }
+
+void Digital_Output::addPositionChangeHandler(positionChangeHandlersFunc function) {
+  this->positionChangeHandlers.push_back(function);
+}
+
+void Digital_Output::addTargetChangeHandler(targetChangeHandlersFunc function) {
+  this->targetChangeHandlers.push_back(function);
+}
+
+void Digital_Output::_onPositionChange(float oldPosition, float newPosition) {
+    for(auto&& handler : this->positionChangeHandlers) {
+        //std::thread(handler, oldState, newState).detach();
+        threadPool.push_task(handler, oldPosition, newPosition);
+    }
+}
+
+void Digital_Output::_onTargetChange(float oldTarget, float newTarget) {
+    for(auto&& handler : this->targetChangeHandlers) {
+        //std::thread(handler, oldState, newState).detach();
+        threadPool.push_task(handler, oldTarget, newTarget);
+    }
+}
+
+
 
 void Digital_Output::_onMainThreadStart() {
   std::cout << "Starting Output " << this->getName() << " thread..." << std::endl;
@@ -307,7 +337,11 @@ void Digital_Outputs::addOutput(Digital_Output *output) {
 
 Digital_Output *Digital_Outputs::findByName(std::string name) {
     auto it = std::find_if(this->outputs.begin(), this->outputs.end(), [name](Digital_Output *obj) {return obj->getName() == name;});
-    return *it;
+    // Consider adding a check here for iterator validity before dereferencing (*it)
+    if (it != this->outputs.end()) {
+        return *it;
+    }
+    return nullptr; // Return nullptr if not found to avoid dereferencing an invalid iterator;
 }
 
 
@@ -334,12 +368,13 @@ void Digital_Outputs::stopChildrenThreads() {
   } 
 }
 
+/*
 void Digital_Outputs::joinChildrenThreads() {
   for(std::vector<Digital_Output*>::iterator it = std::begin(this->outputs); it != std::end(this->outputs); ++it) {
     (*it)->getProcessThread()->join();
   } 
 }
-
+*/
 
 Digital_Outputs::~Digital_Outputs() {
   for(std::vector<Digital_Output*>::iterator it = std::begin(this->outputs); it != std::end(this->outputs); ++it) {

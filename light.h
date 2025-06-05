@@ -4,6 +4,7 @@
 
 #include <nlohmann/json.hpp>
 #include <vector>
+#include <atomic> 
 
 #include "dmx.h"
 #include "commons.h"
@@ -17,9 +18,9 @@ using json = nlohmann::json;
 
 class LIGHT: public withConfig<CONF::Light>, public withSingleThread, public withMqtt {
     private:
-        int value;
-        bool dimming;
-        int updown; // 1 / -1 multiplicator
+        std::atomic<int> value;
+        std::atomic<bool> dimming;
+        std::atomic<int> updown; // 1 / -1 multiplicator
 
         using valueChangeHandlersFunc = std::function<void(int /*last_value*/, int /*value*/)>;
         std::vector<valueChangeHandlersFunc> valueChangeHandlers;
@@ -79,7 +80,7 @@ class LIGHTS {
         void dump();
         void startChildrenThreads();
         void stopChildrenThreads();
-        void joinChildrenThreads();
+        //void joinChildrenThreads();
 };
 
 #endif
