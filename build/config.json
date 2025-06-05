@@ -347,7 +347,7 @@
                 "retain": false,
                 "retainValue": "OFF",
                 "set_TOPIC": "HousePLC/Digital_Outputs/DO11/SET",
-                "type": "DIMMABLE"                
+                "type": "DIMMABLE"
             },
             {
                 "comment": "Chauffe_eau pompe",
@@ -627,9 +627,10 @@
                 "up_DoName": "DO15",
                 "down_DoName":"DO16",
                 "rain_sensor_AiName": "AI01",
-                "get_TOPIC": "HousePLC/VERRIERE/GET",
-                "set_TOPIC": "HousePLC/VERRIERE/SET",
-                "dispatch_TOPIC": "HousePLC/VERRIERE/DISPATCH"
+                "get_TOPIC": "HousePLC/Verriere/GET",
+                "set_TOPIC": "HousePLC/Verriere/SET",
+                "dispatch_TOPIC": "HousePLC/Verriere/DISPATCH"
+
             }
         ]
     }

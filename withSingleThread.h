@@ -23,7 +23,7 @@ class withSingleThread {
         void setThreadSleepTimeMillis(int);
         void start();
         void stop();
-        //std::thread *getProcessThread();
+        std::thread *getProcessThread();
 };
 
 

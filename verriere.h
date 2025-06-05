@@ -96,6 +96,8 @@ class VERRIERE: public withConfig<CONF::Verriere>, public withSingleThread, publ
 
 };
 
+
+
 class VERRIERES {
     private:
         std::vector<VERRIERE*> verrieres;
@@ -111,7 +113,7 @@ class VERRIERES {
 
         void startChildrenThreads();
         void stopChildrenThreads();
-        //void joinChildrenThreads();
+        void joinChildrenThreads();
 
 };
 

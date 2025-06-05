@@ -85,16 +85,6 @@ class Digital_Output: public withSingleThread, public withConfig<CONF::Output>, 
 
         void toggle();
 
-        // New methods for TIMED output
-        long getTimedDurationMs();
-        void setTimedDurationMs(long duration);
-        long getSlowdownDurationMs();
-        void setSlowdownDurationMs(long duration);
-        float getCurrentPosition();
-        void setCurrentPosition(float position);
-        float getTargetPosition();
-        void setTargetPosition(float position);
-        void publishPosition();
 
         void process();
         void _onMainThreadStart();
@@ -118,7 +108,7 @@ class Digital_Outputs {
 
         void startChildrenThreads();
         void stopChildrenThreads();
-        //void joinChildrenThreads();
+        void joinChildrenThreads();
 
 };
 

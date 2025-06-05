@@ -120,14 +120,14 @@ namespace CONF {
             verriere->set_TOPIC = v["set_TOPIC"].get<std::string>();
             verriere->get_TOPIC = v["get_TOPIC"].get<std::string>();
             verriere->dispatch_TOPIC = v["dispatch_TOPIC"].get<std::string>();
-            verriere->open_duration_ms = v["open_duration_ms"].get<long>();
-            verriere->close_duration_ms = v["close_duration_ms"].get<long>();
-            verriere->open_slowdown_duration_ms = v["open_slowdown_duration_ms"].get<long>();
-            verriere->close_slowdown_duration_ms = v["close_slowdown_duration_ms"].get<long>();
+            verriere->open_duration_ms = v["open_duration_ms"].get<int>();
+            verriere->close_duration_ms = v["close_duration_ms"].get<int>();
+            verriere->open_slowdown_duration_ms = v["open_slowdown_duration_ms"].get<int>();
+            verriere->close_slowdown_duration_ms = v["close_slowdown_duration_ms"].get<int>();
             verriere->current_position = v["current_position"].get<int>();
-            verriere->up_DoName = v["up_DoName"].get<long>();
-            verriere->down_DoName = v["down_DoName"].get<long>();
-            verriere->rain_sensor_AiName = v["rain_sensor_AiName"].get<float>();
+            verriere->up_DoName = v["up_DoName"].get<std::string>();
+            verriere->down_DoName = v["down_DoName"].get<std::string>();
+            verriere->rain_sensor_AiName = v["rain_sensor_AiName"].get<std::string>();
         }
 
 

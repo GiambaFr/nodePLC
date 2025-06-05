@@ -342,11 +342,11 @@ void LIGHTS::stopChildrenThreads() {
   } 
 }
 
-/*void LIGHTS::joinChildrenThreads() {
+void LIGHTS::joinChildrenThreads() {
   for(std::vector<LIGHT*>::iterator it = std::begin(this->lights); it != std::end(this->lights); ++it) {
-    (*it)->getProcessThread()->join();
+    (*it)->processThread()->join();
   } 
-}*/
+}
 
 LIGHTS::~LIGHTS() {
   for(std::vector<LIGHT*>::iterator it = std::begin(this->lights); it != std::end(this->lights); ++it) {

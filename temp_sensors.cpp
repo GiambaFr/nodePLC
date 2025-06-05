@@ -262,11 +262,11 @@ void Temp_Sensors::stopChildrenThreads() {
   } 
 }
 
-/*void Temp_Sensors::joinChildrenThreads() {
+void Temp_Sensors::joinChildrenThreads() {
   for(std::vector<Temp_Sensor*>::iterator it = std::begin(this->sensors); it != std::end(this->sensors); ++it) {
     (*it)->getProcessThread()->join();
   } 
-}*/
+}
 
 Temp_Sensors::~Temp_Sensors() {
   for(std::vector<Temp_Sensor*>::iterator it = std::begin(this->sensors); it != std::end(this->sensors); ++it) {

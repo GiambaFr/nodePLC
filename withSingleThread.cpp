@@ -66,6 +66,9 @@ void withSingleThread::_onMainThreadStop() {
     //user define function
 }
 
+std::thread *withSingleThread::getProcessThread() {
+    return &this->main_thread;
+}
 
 withSingleThread::~withSingleThread() {
     if (this->run) // If stop() wasn't called explicitly, ensure thread is stopped and joined

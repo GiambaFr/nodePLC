@@ -2,6 +2,7 @@
 #include <chrono>
 #include <utility> 
 #include <cmath>
+#include <algorithm>
 
 #include "commons.h"
 #include "digital_output.h"
@@ -36,7 +37,7 @@ VERRIERE::VERRIERE(CONFIG *config, CONF::Verriere* verriereConf, MyMqtt *myMqtt,
 
   this->addPositionChangeHandler([this](int oldPosition, int newPosition) {
     json j;
-    j['event'] = "POSITION_CHANGE";
+    j["event"] = "POSITION_CHANGE";
     j["state"] = verriereState_to_string(this->getState());
     j["old_position"] = oldPosition;
     j["position"] = newPosition;
@@ -48,7 +49,7 @@ VERRIERE::VERRIERE(CONFIG *config, CONF::Verriere* verriereConf, MyMqtt *myMqtt,
 
   this->addTargetChangeHandler([this](int oldTarget, int newTarget) {
     json j;
-    j['event'] = "TARGET_CHANGE";
+    j["event"] = "TARGET_CHANGE";
     j["state"] = verriereState_to_string(this->getState());
     j["position"] = this->getCurrentPosition();
     j["old_target"] = oldTarget;
@@ -60,7 +61,7 @@ VERRIERE::VERRIERE(CONFIG *config, CONF::Verriere* verriereConf, MyMqtt *myMqtt,
 
   this->addStateChangeHandler([this](VERRIERE_STATE oldState, VERRIERE_STATE newState) {
     json j;
-    j['event'] = "STATE_CHANGE";
+    j["event"] = "STATE_CHANGE";
     j["name"] = this->getName();
     j["comment"] = this->getComment();
     j["position"] = this->getCurrentPosition();
@@ -427,7 +428,7 @@ void VERRIERE::process() {
     if (elapsed_since_last_publish >= publish_interval_ms && 
         !(this->getState() == VERRIERE_STATE::VERRIERE_MOVING_UP || this->getState() == VERRIERE_STATE::VERRIERE_MOVING_DOWN)) {
         json j;
-        j['event'] = "STATUS_UPDATE"; // Un événement générique pour les mises à jour périodiques
+        j["event"] = "STATUS_UPDATE"; // Un événement générique pour les mises à jour périodiques
         j["name"] = this->getName();
         j["comment"] = this->getComment();
         j["state"] = verriereState_to_string(this->getState());
@@ -484,8 +485,13 @@ void VERRIERES::addVerriere(VERRIERE* V) {
     this->verrieres.push_back(V);
 }
 
-VERRIERE VERRIERES::*findByName(std::string) {
-
+VERRIERE *VERRIERES::findByName(std::string name) {
+    auto it = std::find_if(this->verrieres.begin(), this->verrieres.end(), [name](VERRIERE *obj) {return obj->getName() == name;});
+    // Consider adding a check here for iterator validity before dereferencing (*it)
+    if (it != this->verrieres.end()) {
+        return *it;
+    }
+    return nullptr; // Return nullptr if not found to avoid dereferencing an invalid iterator;
 }
 
 void VERRIERES::dump() {
@@ -498,4 +504,8 @@ void VERRIERES::startChildrenThreads() {
 void VERRIERES::stopChildrenThreads() {
 
 }
-        //void VERRIERES::joinChildrenThreads();
+void VERRIERES::joinChildrenThreads() {
+    for(std::vector<VERRIERE*>::iterator it = std::begin(this->verrieres); it != std::end(this->verrieres); ++it) {
+    (*it)->getProcessThread()->join();
+  } 
+}

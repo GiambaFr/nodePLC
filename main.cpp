@@ -132,10 +132,11 @@ int main(int argc, char** argv) {
 
 
     //Wait for thread to stop
-    //lights->joinChildrenThreads();
-    //TempSensors->joinChildrenThreads();
-    //Outputs->joinChildrenThreads();
-    //Inputs->joinChildrenThreads();
+    lights->joinChildrenThreads();
+    TempSensors->joinChildrenThreads();
+    Outputs->joinChildrenThreads();
+    Inputs->joinChildrenThreads();
+    verrieres->joinChildrenThreads();
 
     return EXIT_SUCCESS;
 }

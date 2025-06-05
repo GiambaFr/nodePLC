@@ -172,11 +172,11 @@ void Digital_Inputs::stopChildrenThreads() {
   } 
 }
 
-/*void Digital_Inputs::joinChildrenThreads() {
+void Digital_Inputs::joinChildrenThreads() {
   for(std::vector<Digital_Input*>::iterator it = std::begin(this->inputs); it != std::end(this->inputs); ++it) {
     (*it)->getProcessThread()->join();
   } 
-}*/
+}
 
 
 Digital_Inputs::~Digital_Inputs() {

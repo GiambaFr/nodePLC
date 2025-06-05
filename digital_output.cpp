@@ -274,29 +274,6 @@ void Digital_Output::process() {
   }
 }
 
-void Digital_Output::addPositionChangeHandler(positionChangeHandlersFunc function) {
-  this->positionChangeHandlers.push_back(function);
-}
-
-void Digital_Output::addTargetChangeHandler(targetChangeHandlersFunc function) {
-  this->targetChangeHandlers.push_back(function);
-}
-
-void Digital_Output::_onPositionChange(float oldPosition, float newPosition) {
-    for(auto&& handler : this->positionChangeHandlers) {
-        //std::thread(handler, oldState, newState).detach();
-        threadPool.push_task(handler, oldPosition, newPosition);
-    }
-}
-
-void Digital_Output::_onTargetChange(float oldTarget, float newTarget) {
-    for(auto&& handler : this->targetChangeHandlers) {
-        //std::thread(handler, oldState, newState).detach();
-        threadPool.push_task(handler, oldTarget, newTarget);
-    }
-}
-
-
 
 void Digital_Output::_onMainThreadStart() {
   std::cout << "Starting Output " << this->getName() << " thread..." << std::endl;
@@ -368,13 +345,12 @@ void Digital_Outputs::stopChildrenThreads() {
   } 
 }
 
-/*
+
 void Digital_Outputs::joinChildrenThreads() {
   for(std::vector<Digital_Output*>::iterator it = std::begin(this->outputs); it != std::end(this->outputs); ++it) {
     (*it)->getProcessThread()->join();
   } 
 }
-*/
 
 Digital_Outputs::~Digital_Outputs() {
   for(std::vector<Digital_Output*>::iterator it = std::begin(this->outputs); it != std::end(this->outputs); ++it) {

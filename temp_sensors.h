@@ -72,7 +72,7 @@ class Temp_Sensors {
         
         void startChildrenThreads();
         void stopChildrenThreads();
-        //void joinChildrenThreads();
+        void joinChildrenThreads();
 };
 
 #endif

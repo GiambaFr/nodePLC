@@ -80,7 +80,7 @@ class LIGHTS {
         void dump();
         void startChildrenThreads();
         void stopChildrenThreads();
-        //void joinChildrenThreads();
+        void joinChildrenThreads();
 };
 
 #endif
