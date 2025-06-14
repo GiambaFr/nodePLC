@@ -138,3 +138,4 @@ template class withConfig<CONF::Output>;
 template class withConfig<CONF::OW_Sensor>;
 template class withConfig<CONF::Light>;
 template class withConfig<CONF::Verriere>;
+template class withConfig<CONF::Analog_Input>;

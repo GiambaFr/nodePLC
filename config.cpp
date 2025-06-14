@@ -18,6 +18,7 @@ namespace CONF {
         j["OW"] = c.ow->getJsonConfig(c.ow);
         j["Lights"] = c.lights->getJsonConfig(c.lights);
         j["Verrieres"] = c.verrieres->getJsonConfig(c.verrieres);
+        j["Analog_Inputs"] = c.AInputs->getJsonConfig(c.AInputs);
     }
 
     void from_json(const json& j, Config& c) {
@@ -74,6 +75,7 @@ namespace CONF {
             }
             c.outputs->outputs.push_back(output);
         }
+
         c.ow = new CONF::OW();
         c.ow->server = j["OW"]["server"].get<std::string>();
         c.ow->port = j["OW"]["port"].get<int>();
@@ -89,6 +91,22 @@ namespace CONF {
             sensor->get_TOPIC = s["get_TOPIC"].get<std::string>();
             sensor->dispatch_TOPIC = s["dispatch_TOPIC"].get<std::string>();
             c.ow->sensors.push_back(sensor);
+        }
+
+        c.AInputs = new CONF::Analog_Inputs();
+        c.AInputs->lsb = j["Analog_Inputs"]["lsb"].get<float>();
+        c.AInputs->MCP3422_Addr = j["Analog_Inputs"]["MCP3422_Addr"].get<int>();
+        c.AInputs->gain = j["Analog_Inputs"]["gain"].get<int>();
+        c.AInputs->sampleRate = j["Analog_Inputs"]["sample_rate"].get<int>();
+        for(auto& s: j["Analog_Inputs"]["Inputs"]) {
+            Analog_Input *AI = new CONF::Analog_Input();
+            AI->name = s["name"].get<std::string>();
+            AI->comment = s["comment"].get<std::string>();
+            AI->channel = s["channel"].get<int>();
+            AI->K = s["K"].get<float>();
+            AI->get_TOPIC = s["get_TOPIC"].get<std::string>();
+            AI->dispatch_TOPIC = s["dispatch_TOPIC"].get<std::string>();
+            c.AInputs->inputs.push_back(AI);
         }
         
         c.lights = new CONF::Lights();
@@ -288,6 +306,32 @@ json CONF::Verrieres::getJsonConfig(CONF::Verrieres *verrieres){
     }
     return j;
 }
+
+
+json CONF::Analog_Input::getJsonConfig(CONF::Analog_Input *input){
+    json s;
+    s["name"] = input->name;
+    s["comment"] = input->comment;
+    s["channel"] = input->channel;
+    s["K"] = input->K;
+    s["get_TOPIC"] = input->get_TOPIC;
+    s["dispatch_TOPIC"] = input->dispatch_TOPIC;
+    return s;
+}
+
+json CONF::Analog_Inputs::getJsonConfig(CONF::Analog_Inputs *AInputs){
+    json j;
+    j["lsb"] = AInputs->lsb;
+    j["MCP3422_Addr"] = AInputs->MCP3422_Addr;
+    j["gain"] = AInputs->gain;
+    j["sample_rate"] = AInputs->sampleRate;
+    j["Inputs"] = json::array();
+    for(auto& input: AInputs->inputs) {
+        j["Inputs"].push_back(input->getJsonConfig(input));
+    }
+    return j;
+}
+
 
 CONFIG::CONFIG() {
 

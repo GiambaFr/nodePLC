@@ -5,7 +5,6 @@
 
 #include <nlohmann/json.hpp>
 #include <vector>
-#include <atomic>
 
 #include "dmx.h"
 #include "commons.h"
@@ -24,9 +23,7 @@ class VERRIERE: public withConfig<CONF::Verriere>, public withSingleThread, publ
         Digital_Output* outputUp;
         Digital_Output* outputDown;
 
-        std::atomic<bool> init;
-        std::atomic<bool> stop_motion_thread; // Flag pour arrêter le thread de mouvement
-        std::thread motion_thread; // Thread pour le calcul de la position
+        bool init;
 
         //todo Analog_Input;
 
@@ -49,6 +46,7 @@ class VERRIERE: public withConfig<CONF::Verriere>, public withSingleThread, publ
         VERRIERE_STATE state;
         int current_position;
         int target_position;
+        std::chrono::steady_clock::time_point actual_time;
         std::chrono::steady_clock::time_point motion_start_time;
         std::chrono::steady_clock::time_point last_mqtt_publish_time;
 
@@ -64,8 +62,7 @@ class VERRIERE: public withConfig<CONF::Verriere>, public withSingleThread, publ
 
         // Nouvelle fonction pour calculer la position basée sur le temps et le mouvement
         int calculateCurrentPositionBasedOnTime();
-        // Fonction exécutée par le thread de mouvement
-        void motionCalculationThread();
+
 
     public:
         VERRIERE(CONFIG* /*config*/, CONF::Verriere* /*lightConf*/, MyMqtt* /*myMqtt*/, Digital_Output*, Digital_Output* /*, TODO:: Analog_Input*/);
@@ -83,10 +80,11 @@ class VERRIERE: public withConfig<CONF::Verriere>, public withSingleThread, publ
         void setCurrentPosition(int position);
         int getTargetPosition();
         void setTargetPosition(int position);
-        std::string getOutputUp();
+        /*std::string getOutputUp();
         std::string getOutputDown();
-        std::string getAIRainSensor();
-
+        std::string getAIRainSensor();*/
+        int timeToPercent(int totalTime, long timeMs);
+        long percentToTime(int totalTime, int percent);
 
 
         

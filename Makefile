@@ -10,7 +10,7 @@ LDFLAGS=-g
 CPPFLAGS=-std=c++17 -fdiagnostics-color=always -Wno-psabi -g -I/usr/include/
 LDLIBS=-lwiringPi -lpthread -lpaho-mqtt3as -lpaho-mqttpp3 -low -lowcapi
 
-SRCS=main.cpp commons.cpp config.cpp bt.cpp digital_input.cpp digital_output.cpp dmx.cpp light.cpp myMQTT.cpp temp_sensors.cpp verriere.cpp withConfig.cpp withState.cpp withSingleThread.cpp withMqtt.cpp
+SRCS=main.cpp commons.cpp config.cpp bt.cpp digital_input.cpp digital_output.cpp dmx.cpp light.cpp myMQTT.cpp temp_sensors.cpp analog_input.cpp withConfig.cpp withState.cpp withSingleThread.cpp withMqtt.cpp
 OBJS=$(subst .cpp,.o,$(SRCS))
 
 all: HousePLC

@@ -20,7 +20,6 @@ class withState {
         std::vector<stateChangeHandlersFunc> stateChangeHandlers;
         void _onStateChange(StateType oldState, StateType newState);
         
-        void addStateChangeHandler(stateChangeHandlersFunc /*function*/);
 
         using dimValueChangeHandlersFunc = std::function<void(int oldDimValue, int newDimValue)>;
         std::vector<dimValueChangeHandlersFunc> dimValueChangeHandlers;
@@ -41,6 +40,7 @@ class withState {
         virtual ~withState();
         void setState(StateType /*state*/);
         StateType getState();
+        void addStateChangeHandler(stateChangeHandlersFunc /*function*/);
 };
 
 

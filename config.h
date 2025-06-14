@@ -92,6 +92,26 @@ namespace CONF {
     } OW;
 
 
+    typedef struct Analog_Input {
+        std::string name;
+        std::string comment;
+        int channel;
+        float K;
+        std::string get_TOPIC;
+        std::string dispatch_TOPIC;
+        std::string set_TOPIC;
+        json getJsonConfig(CONF::Analog_Input*);
+    } Analog_Input;
+
+    typedef struct Analog_Inputs {
+        float lsb;
+        int MCP3422_Addr;
+        int gain;
+        int sampleRate;
+        std::vector<Analog_Input*> inputs;
+        json getJsonConfig(CONF::Analog_Inputs*);
+    } Analog_Inputs;
+
     typedef struct Light {
         std::string name;
         std::string comment;
@@ -142,6 +162,7 @@ namespace CONF {
         OW *ow;
         Lights *lights;
         Verrieres *verrieres;
+        Analog_Inputs *AInputs;
     };
 
     void to_json(json& j, const Config& c);

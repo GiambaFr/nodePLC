@@ -1,4 +1,28 @@
 {
+    "Analog_Inputs": {
+        "Inputs": [
+            {
+                "K": 5.564187526702881,
+                "channel": 0,
+                "comment": "AI01",
+                "dispatch_TOPIC": "HousePLC/Analog_Inputs/AI01",
+                "get_TOPIC": "HousePLC/Analog_Inputs/AI01/GET",
+                "name": "AI01"
+            },
+            {
+                "K": 5.5633978843688965,
+                "channel": 1,
+                "comment": "AI02",
+                "dispatch_TOPIC": "HousePLC/Analog_Inputs/AI02",
+                "get_TOPIC": "HousePLC/Analog_Inputs/AI02/GET",
+                "name": "AI02"
+            }
+        ],
+        "MCP3422_Addr": 104,
+        "gain": 0,
+        "lsb": 15.625,
+        "sample_rate": 3
+    },
     "Digital_Inputs": {
         "Inputs": [
             {
@@ -617,15 +641,15 @@
     "Verrieres": {
         "Verrieres": [
             {
-                "close_duration_ms": 12000,
-                "close_slowdown_duration_ms": 2000,
+                "close_duration_ms": 58500,
+                "close_slowdown_duration_ms": 20000,
                 "comment": "Verrière",
                 "current_position": 0,
                 "dispatch_TOPIC": "HousePLC/Verriere/DISPATCH",
                 "down_DoName": "DO16",
                 "get_TOPIC": "HousePLC/Verriere/GET",
                 "name": "Verriere",
-                "open_duration_ms": 10000,
+                "open_duration_ms": 48500,
                 "open_slowdown_duration_ms": 0,
                 "rain_sensor_AiName": "AI01",
                 "set_TOPIC": "HousePLC/Verriere/SET",
