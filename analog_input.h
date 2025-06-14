@@ -47,25 +47,25 @@ class Analog_Input: public withConfig<CONF::Analog_Input>, public withSingleThre
     private:
 
         int fd;
-        float lsb;
+        double lsb;
 
-        float value;
+        double value;
 
         std::mutex *i2cMutex;
-        float _read();
+        double _read();
 
-        using voltageChangeHandlersFunc = std::function<void(float,float)>;
+        using voltageChangeHandlersFunc = std::function<void(double,double)>;
         std::vector<voltageChangeHandlersFunc> voltageChangeHandlers;
-        void _onVoltageChange(float oldValue, float newValue);
+        void _onVoltageChange(double oldValue, double newValue);
 
     public:
-        Analog_Input(CONFIG* /*config*/, CONF::Analog_Input* /*sensorConf*/, MyMqtt* /*myMqtt*/, int /*fd*/,float /*lsb*/, std::mutex *i2cMutex);
+        Analog_Input(CONFIG* /*config*/, CONF::Analog_Input* /*sensorConf*/, MyMqtt* /*myMqtt*/, int /*fd*/,double /*lsb*/, std::mutex *i2cMutex);
         ~Analog_Input();
 
         int getChannel();
-        float getK();
+        double getK();
 
-        float getValue();
+        double getValue();
 
         void process();
         void _onMainThreadStart();

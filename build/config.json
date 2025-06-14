@@ -19,7 +19,7 @@
             }
         ],
         "MCP3422_Addr": 104,
-        "gain": 0,
+        "gain": 2,
         "lsb": 15.625,
         "sample_rate": 3
     },

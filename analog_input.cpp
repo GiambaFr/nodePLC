@@ -24,14 +24,14 @@ using std::string;
 
 class Analog_Input;
 
-Analog_Input::Analog_Input(CONFIG *config, CONF::Analog_Input *aInputConf, MyMqtt *myMqtt, int fd,float lsb, std::mutex *i2cMutex) : withConfig(config, aInputConf), withMqtt(myMqtt), fd(fd), lsb(lsb), i2cMutex(i2cMutex) {
+Analog_Input::Analog_Input(CONFIG *config, CONF::Analog_Input *aInputConf, MyMqtt *myMqtt, int fd, double lsb, std::mutex *i2cMutex) : withConfig(config, aInputConf), withMqtt(myMqtt), fd(fd), lsb(lsb), i2cMutex(i2cMutex) {
 
   this->setThreadSleepTimeMillis(1000);
 
 
-  this->addVoltageChangeHandler([this](float oldValue, float newValue) {
+  this->addVoltageChangeHandler([this](double oldValue, double newValue) {
     json j;
-    j["event"] = "TEMPERATURE_CHANGE";
+    j["event"] = "VOLTAGE_CHANGE";
     j["name"] = this->getName();
     j["comment"] = this->getComment();
     j["last_voltage"] = oldValue;
@@ -43,7 +43,8 @@ Analog_Input::Analog_Input(CONFIG *config, CONF::Analog_Input *aInputConf, MyMqt
   //getConfiguration
   this->getMqtt()->addMessageArrivedHandler([this](std::string topic, std::string payload) {
     if (topic == this->getGetTOPIC()) {
-      json j = this->getConfigT()->getJsonConfig(this->getConfigT());
+      json j = this->getConfigT()->getJsonConfig(this->getConfigT());  
+      j["event"] = "REQUEST";
       j["voltage"] = this->getValue();
       j["value"] = this->getValue();
       this->getMqtt()->publish(this->getDispatchTOPIC(), j, false);
@@ -54,9 +55,9 @@ Analog_Input::Analog_Input(CONFIG *config, CONF::Analog_Input *aInputConf, MyMqt
 
 }
 
-float Analog_Input::_read() {
+double Analog_Input::_read() {
     std::lock_guard<std::mutex> lock(*i2cMutex);
-    float value;
+    double value;
     value = analogRead (MCP3422_PIN_BASE + this->getChannel()) - 16;
     //std::cout << std::to_string(value) << std::endl;
     value = value * this->lsb / 1000 * this->getK() / 1000;
@@ -64,7 +65,7 @@ float Analog_Input::_read() {
     return value;
 }
 
-void Analog_Input::_onVoltageChange(float oldValue, float newValue) {
+void Analog_Input::_onVoltageChange(double oldValue, double newValue) {
   for(auto&& handler : this->voltageChangeHandlers) {
     //std::thread t(handler, oldValue, newValue);
     //t.detach();
@@ -76,18 +77,19 @@ int Analog_Input::getChannel() {
   return this->getConfigT()->channel;
 }
 
-float Analog_Input::getK() {
+double Analog_Input::getK() {
   return this->getConfigT()->K;
 }
 
-float Analog_Input::getValue() {
+double Analog_Input::getValue() {
     return this->value;
 }
 
 
 void Analog_Input::process() {
   //std::cout << "reading " << this->getName() << "... " << std::endl << std::flush;
-    float newValue = this->_read();
+    double newValue = this->_read();
+    newValue = std::round(newValue*100000)/100000;
     if (newValue != this->value) {
         this->_onVoltageChange(this->value, newValue);
         this->value = newValue;

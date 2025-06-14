@@ -96,7 +96,7 @@ namespace CONF {
         std::string name;
         std::string comment;
         int channel;
-        float K;
+        double K;
         std::string get_TOPIC;
         std::string dispatch_TOPIC;
         std::string set_TOPIC;
@@ -104,7 +104,7 @@ namespace CONF {
     } Analog_Input;
 
     typedef struct Analog_Inputs {
-        float lsb;
+        double lsb;
         int MCP3422_Addr;
         int gain;
         int sampleRate;

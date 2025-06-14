@@ -94,7 +94,7 @@ namespace CONF {
         }
 
         c.AInputs = new CONF::Analog_Inputs();
-        c.AInputs->lsb = j["Analog_Inputs"]["lsb"].get<float>();
+        c.AInputs->lsb = j["Analog_Inputs"]["lsb"].get<double>();
         c.AInputs->MCP3422_Addr = j["Analog_Inputs"]["MCP3422_Addr"].get<int>();
         c.AInputs->gain = j["Analog_Inputs"]["gain"].get<int>();
         c.AInputs->sampleRate = j["Analog_Inputs"]["sample_rate"].get<int>();
@@ -103,7 +103,7 @@ namespace CONF {
             AI->name = s["name"].get<std::string>();
             AI->comment = s["comment"].get<std::string>();
             AI->channel = s["channel"].get<int>();
-            AI->K = s["K"].get<float>();
+            AI->K = s["K"].get<double>();
             AI->get_TOPIC = s["get_TOPIC"].get<std::string>();
             AI->dispatch_TOPIC = s["dispatch_TOPIC"].get<std::string>();
             c.AInputs->inputs.push_back(AI);
